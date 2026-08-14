@@ -1,0 +1,22 @@
+services:
+  offerpilot:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    image: offerpilot:latest
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    environment:
+      HOST: 0.0.0.0
+      PORT: 4310
+      DATA_DIR: /app/data-v2
+      DATABASE_PATH: /app/data-v2/offerpilot.sqlite
+      UPLOAD_DIR: /app/data-v2/uploads
+    ports:
+      - "127.0.0.1:4310:4310"
+    volumes:
+      - offerpilot-data:/app/data-v2
+
+volumes:
+  offerpilot-data:

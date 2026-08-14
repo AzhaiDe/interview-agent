@@ -1,0 +1,17 @@
+{
+  "competencies": {
+    "ROLE_BACKEND_JAVA_GO": ["语言与并发","数据结构与算法","JVM/运行时","数据库设计与调优","缓存与一致性","消息与异步系统","网络协议","分布式系统","服务治理","系统设计","可观测性与故障排查","安全与权限","工程质量","容量与成本","项目 ownership","技术沟通","测试与发布","云原生基础","搜索与数据处理","可靠性工程","性能工程","API设计","数据建模","事务与一致性","架构演进","代码审查","问题拆解","风险识别","业务理解","复盘改进"],
+    "ROLE_AI_RAG_LLM": ["LLM基础","Prompt与上下文","数据摄取与清洗","Embedding","混合检索","Rerank","RAG评测","幻觉与拒答","Agent规划","工具调用","记忆设计","模型路由","推理性能","成本控制","并发与异步","多模态","安全与提示注入","可观测性","故障降级","知识库运营","服务化部署","数据反馈闭环","实验设计","产品指标","项目 ownership","技术沟通","测试与回归","版本管理","合规隐私","架构演进"],
+    "ROLE_FRONTEND": ["JavaScript/TypeScript","浏览器原理","HTML/CSS","React/Vue","状态管理","组件设计","网络与缓存","实时通信","性能优化","工程化构建","测试","可观测性","安全防护","可访问性","SSR/SSG","跨端开发","数据可视化","交互设计","前端系统设计","API协作","错误处理","发布与回滚","代码质量","依赖治理","容量与成本","项目 ownership","技术沟通","问题拆解","用户体验","架构演进"]
+  },
+  "concepts": {
+    "ROLE_BACKEND_JAVA_GO": ["synchronized","ReentrantLock","AQS","ThreadLocal","线程池","HashMap","JVM内存","GC","OOM","MySQL事务","MVCC","B+树","联合索引","覆盖索引","死锁","Redis String","Redis ZSet","跳表","RDB/AOF","缓存击穿","缓存雪崩","缓存穿透","MQ幂等","重试与死信","TCP","HTTP","TLS","DNS","限流","熔断","分布式锁","CAP","一致性哈希","幂等键","灰度发布","Tracing","指标告警","容量估算","秒杀","消息顺序","数据分片"],
+    "ROLE_AI_RAG_LLM": ["Transformer","tokenization","attention","context window","temperature","structured output","tool calling","function schema","prompt injection","chunking","metadata filter","embedding","cosine similarity","BM25","hybrid search","query rewrite","multi-query","rerank","top-k","MMR","recall@k","MRR","nDCG","faithfulness","answer relevance","citation","abstention","GraphRAG","agent loop","planner","reflection","short-term memory","long-term memory","model routing","streaming","SSE","asyncio","rate limit","retry budget","circuit breaker","token budget","KV cache","quantization","vLLM","trace","eval set","red team","PII"],
+    "ROLE_FRONTEND": ["event loop","microtask","macrotask","closure","prototype","TypeScript","React Fiber","Hooks","useEffect","useMemo","Vue响应式","虚拟DOM","diff","状态管理","路由","hydration","SSR","SSG","code splitting","tree shaking","bundle analyzer","HTTP缓存","Service Worker","WebSocket","SSE","WebRTC","CORS","XSS","CSRF","CSP","Core Web Vitals","LCP","INP","CLS","虚拟列表","防抖","节流","Web Worker","错误边界","source map","RUM","单元测试","E2E","可访问性","国际化","design system","微前端","发布回滚","依赖安全"]
+  },
+  "question_seeds": {
+    "ROLE_BACKEND_JAVA_GO": ["请解释{concept}的原理，并说明在项目中如何验证。","如果{concept}在高并发下失效，你如何定位和修复？","为什么选择{concept}而不是替代方案？请给出权衡。","把当前系统流量放大100倍，{concept}最先出现什么瓶颈？","请设计一个包含{concept}的可观测、可回滚方案。"],
+    "ROLE_AI_RAG_LLM": ["请画出包含{concept}的完整链路，并说明每个阶段的指标。","如果{concept}导致幻觉、延迟或成本上升，你如何定位？","RAG/Agent场景下为什么使用{concept}，什么时候不应该用？","当检索为空、工具超时或模型拒答时，系统如何降级？","如何用离线集和线上反馈验证{concept}确实有效？"],
+    "ROLE_FRONTEND": ["请解释{concept}的机制，并说明浏览器或框架如何实现。","如果线上出现{concept}相关卡顿/错误，你的排查路径是什么？","请比较{concept}的两个实现方案及其性能、兼容性权衡。","如何为{concept}设计监控、回滚和自动化测试？","在弱网、低端设备和大数据量下，{concept}会遇到什么边界？"]
+  }
+}

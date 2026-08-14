@@ -1,0 +1,4073 @@
+{
+  "judged_at": "2026-08-12T04:38:35.977Z",
+  "verdict": "NOT_READY_FOR_FULL_VERIFICATION",
+  "summary": {
+    "competencies": {
+      "total": 90,
+      "verified": 0,
+      "pending_expert_review": 90,
+      "issues": 0
+    },
+    "concepts": {
+      "total": 450,
+      "verified": 0,
+      "pending_expert_review": 450,
+      "issues": 624
+    },
+    "questions": {
+      "total": 900,
+      "verified": 0,
+      "pending_expert_review": 900,
+      "issues": 257
+    },
+    "followups": {
+      "total": 1800,
+      "verified": 0,
+      "pending_expert_review": 1800,
+      "issues": 672
+    },
+    "misconceptions": {
+      "total": 600,
+      "verified": 0,
+      "pending_expert_review": 600,
+      "issues": 0
+    },
+    "failure_modes": {
+      "total": 300,
+      "verified": 0,
+      "pending_expert_review": 300,
+      "issues": 0
+    },
+    "scoring_anchors": {
+      "total": 450,
+      "verified": 0,
+      "pending_expert_review": 450,
+      "issues": 450
+    },
+    "sources": {
+      "total": 26,
+      "verified": 4,
+      "pending_expert_review": 22,
+      "issues": 0
+    }
+  },
+  "issue_counts": {
+    "DUPLICATE_CONTENT": 1241,
+    "SYNTHETIC_VARIANT": 312,
+    "NO_BLIND_RATERS": 450
+  },
+  "rules": [
+    "没有官方/标准/专家证据的技术事实不升级 verified",
+    "重复或自动变体不计作独立概念/问题",
+    "评分锚点必须有两名独立专家及一致性统计",
+    "误区必须有反例，故障必须有诊断和缓解步骤"
+  ],
+  "next_actions": [
+    "把 judged/*.jsonl 作为运行时输入，并过滤 judge_status=verified 或人工允许的 candidate",
+    "补齐概念独立定义、反例、版本和官方来源",
+    "对问题/追问做专家信息增益盲评",
+    "对评分锚点进行双人盲审并记录 Kappa/ICC"
+  ],
+  "issues": [
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-042",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-001 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-042",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-043",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-002 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-043",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-044",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-003 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-044",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-045",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-004 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-045",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-046",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-005 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-046",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-047",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-006 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-047",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-048",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-007 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-048",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-049",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-008 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-049",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-050",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-009 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-050",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-051",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-010 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-051",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-052",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-011 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-052",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-053",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-012 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-053",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-054",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-013 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-054",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-055",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-014 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-055",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-056",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-015 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-056",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-057",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-016 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-057",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-058",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-017 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-058",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-059",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-018 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-059",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-060",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-019 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-060",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-061",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-020 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-061",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-062",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-021 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-062",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-063",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-022 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-063",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-064",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-023 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-064",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-065",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-024 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-065",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-066",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-025 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-066",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-067",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-026 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-067",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-068",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-027 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-068",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-069",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-028 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-069",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-070",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-029 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-070",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-071",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-030 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-071",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-072",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-031 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-072",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-073",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-032 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-073",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-074",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-033 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-074",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-075",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-034 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-075",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-076",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-035 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-076",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-077",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-036 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-077",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-078",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-037 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-078",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-079",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-038 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-079",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-080",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-039 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-080",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-081",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-040 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-081",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-082",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-041 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-082",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-083",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-001 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-083",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-084",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-002 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-084",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-085",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-003 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-085",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-086",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-004 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-086",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-087",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-005 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-087",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-088",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-006 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-088",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-089",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-007 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-089",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-090",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-008 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-090",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-091",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-009 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-091",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-092",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-010 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-092",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-093",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-011 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-093",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-094",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-012 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-094",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-095",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-013 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-095",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-096",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-014 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-096",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-097",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-015 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-097",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-098",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-016 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-098",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-099",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-017 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-099",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-100",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-018 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-100",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-101",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-019 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-101",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-102",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-020 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-102",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-103",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-021 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-103",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-104",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-022 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-104",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-105",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-023 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-105",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-106",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-024 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-106",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-107",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-025 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-107",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-108",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-026 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-108",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-109",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-027 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-109",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-110",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-028 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-110",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-111",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-029 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-111",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-112",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-030 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-112",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-113",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-031 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-113",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-114",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-032 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-114",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-115",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-033 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-115",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-116",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-034 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-116",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-117",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-035 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-117",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-118",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-036 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-118",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-119",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-037 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-119",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-120",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-038 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-120",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-121",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-039 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-121",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-122",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-040 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-122",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-123",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-041 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-123",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-124",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-001 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-124",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-125",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-002 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-125",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-126",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-003 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-126",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-127",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-004 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-127",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-128",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-005 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-128",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-129",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-006 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-129",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-130",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-007 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-130",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-131",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-008 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-131",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-132",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-009 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-132",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-133",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-010 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-133",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-134",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-011 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-134",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-135",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-012 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-135",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-136",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-013 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-136",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-137",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-014 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-137",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-138",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-015 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-138",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-139",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-016 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-139",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-140",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-017 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-140",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-141",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-018 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-141",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-142",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-019 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-142",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-143",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-020 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-143",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-144",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-021 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-144",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-145",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-022 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-145",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-146",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-023 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-146",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-147",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-024 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-147",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-148",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-025 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-148",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-149",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-026 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-149",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-150",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-BACKEND_JAVA_GO-027 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-BACKEND_JAVA_GO-150",
+      "entity_type": "concept",
+      "role": "ROLE_BACKEND_JAVA_GO",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-049",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-001 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-049",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-050",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-002 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-050",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-051",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-003 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-051",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-052",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-004 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-052",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-053",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-005 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-053",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-054",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-006 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-054",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-055",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-007 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-055",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-056",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-008 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-056",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-057",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-009 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-057",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-058",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-010 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-058",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-059",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-011 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-059",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-060",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-012 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-060",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-061",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-013 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-061",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-062",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-014 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-062",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-063",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-015 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-063",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-064",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-016 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-064",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-065",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-017 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-065",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-066",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-018 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-066",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-067",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-019 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-067",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-068",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-020 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-068",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-069",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-021 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-069",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-070",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-022 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-070",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-071",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-023 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-071",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-072",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-024 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-072",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-073",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-025 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-073",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-074",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-026 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-074",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-075",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-027 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-075",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-076",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-028 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-076",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-077",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-029 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-077",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-078",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-030 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-078",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-079",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-031 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-079",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-080",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-032 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-080",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-081",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-033 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-081",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-082",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-034 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-082",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-083",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-035 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-083",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-084",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-036 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-084",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-085",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-037 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-085",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-086",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-038 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-086",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-087",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-039 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-087",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-088",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-040 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-088",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-089",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-041 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-089",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-090",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-042 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-090",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-091",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-043 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-091",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-092",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-044 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-092",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-093",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-045 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-093",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-094",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-046 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-094",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-095",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-047 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-095",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-096",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-048 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-096",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-097",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-001 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-097",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-098",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-002 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-098",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-099",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-003 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-099",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-100",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-004 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-100",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-101",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-005 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-101",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-102",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-006 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-102",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-103",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-007 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-103",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-104",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-008 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-104",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-105",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-009 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-105",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-106",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-010 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-106",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-107",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-011 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-107",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-108",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-012 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-108",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-109",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-013 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-109",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-110",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-014 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-110",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-111",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-015 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-111",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-112",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-016 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-112",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-113",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-017 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-113",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-114",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-018 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-114",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-115",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-019 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-115",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-116",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-020 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-116",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-117",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-021 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-117",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-118",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-022 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-118",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-119",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-023 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-119",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-120",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-024 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-120",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-121",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-025 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-121",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-122",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-026 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-122",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-123",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-027 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-123",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-124",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-028 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-124",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-125",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-029 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-125",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-126",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-030 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-126",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-127",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-031 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-127",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-128",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-032 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-128",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-129",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-033 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-129",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-130",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-034 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-130",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-131",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-035 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-131",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-132",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-036 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-132",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-133",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-037 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-133",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-134",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-038 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-134",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-135",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-039 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-135",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-136",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-040 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-136",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-137",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-041 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-137",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-138",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-042 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-138",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-139",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-043 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-139",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-140",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-044 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-140",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-141",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-045 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-141",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-142",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-046 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-142",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-143",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-047 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-143",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-144",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-048 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-144",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-145",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-001 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-145",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-146",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-002 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-146",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-147",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-003 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-147",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-148",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-004 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-148",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-149",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-005 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-149",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-150",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-AI_RAG_LLM-006 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-AI_RAG_LLM-150",
+      "entity_type": "concept",
+      "role": "ROLE_AI_RAG_LLM",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-050",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-001 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-050",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-051",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-002 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-051",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-052",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-003 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-052",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-053",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-004 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-053",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-054",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-005 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-054",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-055",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-006 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-055",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-056",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-007 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-056",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-057",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-008 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-057",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-058",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-009 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-058",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-059",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-010 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-059",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-060",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-011 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-060",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-061",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-012 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-061",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-062",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-013 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-062",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-063",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-014 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-063",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-064",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-015 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-064",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-065",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-016 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-065",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-066",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-017 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-066",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-067",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-018 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-067",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-068",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-019 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-068",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-069",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-020 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-069",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-070",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-021 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-070",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-071",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-022 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-071",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-072",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-023 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-072",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-073",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-024 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-073",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-074",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-025 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-074",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-075",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-026 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-075",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-076",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-027 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-076",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-077",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-028 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-077",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-078",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-029 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-078",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-079",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-030 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-079",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-080",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-031 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-080",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-081",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-032 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-081",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-082",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-033 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-082",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-083",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-034 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-083",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-084",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-035 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-084",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-085",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-036 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-085",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-086",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-037 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-086",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-087",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-038 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-087",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-088",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "DUPLICATE_CONTENT",
+      "message": "与 CONCEPT-FRONTEND-039 内容重复，不能作为独立知识条目",
+      "severity": "major"
+    },
+    {
+      "id": "CONCEPT-FRONTEND-088",
+      "entity_type": "concept",
+      "role": "ROLE_FRONTEND",
+      "code": "SYNTHETIC_VARIANT",
+      "message": "这是同一 canonical 概念的自动变体，不应计作新的技术概念；需拆成有独立定义、反例和来源的子概念",
+      "severity": "major"
+    }
+  ]
+}

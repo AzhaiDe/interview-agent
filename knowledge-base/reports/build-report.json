@@ -1,0 +1,69 @@
+{
+  "generated_at": "2026-08-12T03:58:36.873Z",
+  "roles": [
+    "ROLE_BACKEND_JAVA_GO",
+    "ROLE_AI_RAG_LLM",
+    "ROLE_FRONTEND"
+  ],
+  "targets": {
+    "competencies": 30,
+    "concepts": 150,
+    "questions": 300,
+    "followups": 600,
+    "misconceptions": 200,
+    "failure_modes": 100,
+    "scoring_anchors": 150
+  },
+  "source_count": 26,
+  "source_platforms": [
+    "nowcoder",
+    "zhihu",
+    "juejin",
+    "official_docs",
+    "xiaohongshu"
+  ],
+  "actual": {
+    "competencies": 90,
+    "concepts": 450,
+    "questions": 900,
+    "followups": 1800,
+    "misconceptions": 600,
+    "failure_modes": 300,
+    "scoring_anchors": 450
+  },
+  "per_role": {
+    "ROLE_BACKEND_JAVA_GO": {
+      "competencies": 30,
+      "concepts": 150,
+      "questions": 300,
+      "followups": 600,
+      "misconceptions": 200,
+      "failure_modes": 100,
+      "scoring_anchors": 150
+    },
+    "ROLE_AI_RAG_LLM": {
+      "competencies": 30,
+      "concepts": 150,
+      "questions": 300,
+      "followups": 600,
+      "misconceptions": 200,
+      "failure_modes": 100,
+      "scoring_anchors": 150
+    },
+    "ROLE_FRONTEND": {
+      "competencies": 30,
+      "concepts": 150,
+      "questions": 300,
+      "followups": 600,
+      "misconceptions": 200,
+      "failure_modes": 100,
+      "scoring_anchors": 150
+    }
+  },
+  "status": "pending_expert_review",
+  "notes": [
+    "数量与字段结构已自动验收",
+    "论坛来源和派生题目仍需专家盲审后才能升级为verified",
+    "小红书来源已追加；后续可继续补充其他公司与平台"
+  ]
+}

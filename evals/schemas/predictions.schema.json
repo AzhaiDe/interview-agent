@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["run", "resume", "interview", "ranking", "memory"],
+  "properties": {
+    "run": {
+      "type": "object",
+      "required": ["model", "promptVersion", "createdAt"],
+      "properties": {
+        "model": { "type": "string" },
+        "promptVersion": { "type": "string" },
+        "createdAt": { "type": "string" }
+      }
+    },
+    "resume": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "skills", "claims"],
+        "properties": {
+          "id": { "type": "string" },
+          "skills": { "type": "array", "items": { "type": "string" } },
+          "claims": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["claim", "evidenceText"],
+              "properties": {
+                "claim": { "type": "string" },
+                "evidenceText": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "interview": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "score", "action", "answeredSkill", "nextSkill"],
+        "properties": {
+          "id": { "type": "string" },
+          "score": { "type": "number", "minimum": 0, "maximum": 10 },
+          "action": { "enum": ["clarify", "advance", "pivot", "finish"] },
+          "answeredSkill": { "type": "string" },
+          "nextSkill": { "type": "string" }
+        }
+      }
+    },
+    "ranking": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["jobId", "candidateIds"],
+        "properties": {
+          "jobId": { "type": "string" },
+          "candidateIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+        }
+      }
+    },
+    "memory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "results"],
+        "properties": {
+          "id": { "type": "string" },
+          "results": {
+            "type": "array",
+            "maxItems": 5,
+            "items": {
+              "type": "object",
+              "required": ["memoryId", "deviceNo", "groupId", "content"],
+              "properties": {
+                "memoryId": { "type": "string" },
+                "deviceNo": { "type": "string" },
+                "groupId": { "type": "string" },
+                "content": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

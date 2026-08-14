@@ -1,0 +1,11 @@
+{
+  "run": {
+    "model": "example-model",
+    "promptVersion": "example-v0",
+    "createdAt": "2026-07-30T00:00:00Z"
+  },
+  "resume": [],
+  "interview": [],
+  "ranking": [],
+  "memory": []
+}

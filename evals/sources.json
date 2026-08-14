@@ -1,0 +1,50 @@
+{
+  "version": "0.1.0",
+  "checkedAt": "2026-07-30",
+  "sources": [
+    {
+      "id": "CN-OCC-2022",
+      "name": "中华人民共和国职业分类大典（2022年版）及计算机程序设计员国家职业技能标准",
+      "url": "https://www.mohrss.gov.cn/xxgk2020/fdzdgknr/rcrs_4225/jnrc/zyyjnpj/202208/W020220805357105938107.pdf",
+      "authority": "government-standard",
+      "usage": "rubric-reference",
+      "redistribution": "reference-only",
+      "status": "approved"
+    },
+    {
+      "id": "ONET-30.3",
+      "name": "O*NET 30.3 Database",
+      "url": "https://www.onetcenter.org/database.html",
+      "authority": "government-sponsored-taxonomy",
+      "license": "CC-BY-4.0-with-exceptions",
+      "usage": "taxonomy-cross-check",
+      "status": "approved-with-attribution"
+    },
+    {
+      "id": "ALIYUN-PJF-2019",
+      "name": "第二届阿里巴巴大数据智能云上编程大赛——智联招聘人岗智能匹配",
+      "url": "https://tianchi.aliyun.com/dataset/44080",
+      "authority": "real-world-competition-dataset",
+      "usage": "external-ranking-benchmark",
+      "status": "conditional-license-review-required"
+    },
+    {
+      "id": "LREC-JD-ER-2022",
+      "name": "Benchmark Corpus for Entity Recognition in Job Descriptions",
+      "url": "https://aclanthology.org/2022.lrec-1.128/",
+      "authority": "peer-reviewed-corpus",
+      "license": "CC-BY-NC-4.0",
+      "usage": "research-only-jd-extraction",
+      "status": "non-commercial-only"
+    },
+    {
+      "id": "MIT-INTERVIEW",
+      "name": "MIT Interview Dataset",
+      "url": "https://roc-hci.com/past-projects/automated-prediction-of-job-interview-performances/",
+      "authority": "peer-reviewed-multirater-dataset",
+      "usage": "future-multimodal-research",
+      "status": "restricted-and-out-of-scope"
+    }
+  ]
+}
+

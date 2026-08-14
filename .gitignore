@@ -1,0 +1,15 @@
+data/recruiter.json
+data/interviews.json
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+!deploy/.env.production.example
+data-v2/
+evals/results/*.json
+!evals/results/predictions.example.json
+.DS_Store
+.claude/
+tools/cloudflared
+*.log

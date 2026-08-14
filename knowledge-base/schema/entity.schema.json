@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://offerpilot.local/schema/entity.schema.json",
+  "type": "object",
+  "required": ["id", "entity_type", "role_ids", "status", "source_ids", "created_at", "updated_at"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[A-Z][A-Z0-9_-]+$"},
+    "entity_type": {"enum": ["competency", "concept", "question", "followup", "misconception", "failure_mode", "scoring_anchor", "source"]},
+    "role_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "status": {"enum": ["candidate", "verified", "rejected", "pending_expert_review"]},
+    "source_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "content": {"type": "object"},
+    "tags": {"type": "array", "items": {"type": "string"}},
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": true
+}

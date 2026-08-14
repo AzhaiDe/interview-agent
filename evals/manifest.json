@@ -1,0 +1,23 @@
+{
+  "name": "offerpilot-evaluation-bootstrap",
+  "version": "0.2.0",
+  "createdAt": "2026-07-30",
+  "level": "silver",
+  "authorityClaimAllowed": false,
+  "counts": {
+    "resume": 21,
+    "interview": 202,
+    "rankingJobs": 9,
+    "memory": 15
+  },
+  "sha256": {
+    "datasets/silver/interview.jsonl": "f036cca127a9d421b85db540fbfae9a51e527ebb0c76eff8046c2e2f6b389df9",
+    "datasets/silver/memory.jsonl": "3705a474377d37d5c5a4e5ecf73b0d0e09a27c1617b3feaac0b8c32bbfc5cb50",
+    "datasets/silver/ranking.jsonl": "15ac03b0e45d97e007765fccc2b45551c05f524c13a5f933b076aa28416b79fd",
+    "datasets/silver/resume.jsonl": "52fb58d39b6c27c42766cef6704fb2d7a14fda53478d3fd1d49a2ed394b4d165",
+    "rubrics/annotation-guide.md": "10989651ed2746ea6c63dd6b8357496a38472cdd8dbfc7a33dea08653d3edf67",
+    "GOLD_BUILD_PROTOCOL.md": "ca5146da6005b67dc22cd56dfd3dac59d9ecb76a9866193a2866fa8d1f21061f"
+  },
+  "promotionGate": "Complete GOLD_BUILD_PROTOCOL.md with qualified independent annotators and adjudication.",
+  "updatedAt": "2026-08-13T03:58:33.840Z"
+}
