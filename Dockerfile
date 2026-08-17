@@ -31,16 +31,18 @@ ENV PORT=4310
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/prompts ./prompts
+COPY --from=builder /app/knowledge-base ./knowledge-base
 
-# 创建数据目录
-RUN mkdir -p /app/data-v2/uploads
+# Runtime data lives on the persistent /app/data volume configured by Compose.
+RUN mkdir -p /app/data/uploads
 
 # 暴露端口
 EXPOSE 4310
 
 # 健康检查
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:4310/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+  CMD node -e "require('http').get('http://localhost:4310/api/v1/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)}).on('error', () => process.exit(1))"
 
 # 启动应用
 CMD ["node", "dist/server.js"]

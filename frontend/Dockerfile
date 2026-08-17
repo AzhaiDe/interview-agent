@@ -1,5 +1,7 @@
-# 构建阶段
-FROM mirror.ccs.tencentyun.com/library/node:22-alpine AS builder
+# 构建阶段。镜像可通过 --build-arg 覆盖，避免绑定单一云厂商镜像源。
+ARG NODE_IMAGE=node:22-alpine
+ARG NGINX_IMAGE=nginx:alpine
+FROM ${NODE_IMAGE} AS builder
 
 # 设置工作目录
 WORKDIR /app
@@ -20,7 +22,7 @@ COPY . .
 RUN npm run build
 
 # 生产阶段
-FROM mirror.ccs.tencentyun.com/library/nginx:alpine AS production
+FROM ${NGINX_IMAGE} AS production
 
 # 复制构建产物到 nginx
 COPY --from=builder /app/dist /usr/share/nginx/html

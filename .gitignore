@@ -3,6 +3,12 @@ data/interviews.json
 node_modules/
 dist/
 .env
+.env.production
+deploy/.env.production
+deploy/.server-config
 data-v2/
+.tmp-test-data/
+.DS_Store
+**/.DS_Store
 evals/results/*.json
 !evals/results/predictions.example.json
