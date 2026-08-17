@@ -35,10 +35,9 @@ apiClient.interceptors.request.use(
 );
 
 apiClient.interceptors.response.use(
-  // Keep the standard Axios response shape. Feature APIs intentionally read
-  // `response.data`; stripping it here would make those methods return
-  // `undefined` after they unwrap the payload a second time.
-  (response) => response,
+  // Feature APIs return the JSON payload directly. Keeping this contract
+  // consistent is important for auth: useLogin expects `data.token` here.
+  (response) => response.data,
   (error) => {
     if (error.response?.status === 401 && !error.config?.url?.includes('/auth/')) {
       useAuthStore.getState().logout();
