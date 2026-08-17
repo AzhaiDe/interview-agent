@@ -53,6 +53,33 @@ export interface ResumeAnalysis {
   analysisVersion?: string;
 }
 
+/** Normalize legacy analyzer output to the shape consumed by the React views. */
+function normalizeProfile(raw: any): ResumeProfile | undefined {
+  if (!raw) return undefined;
+  return {
+    ...raw,
+    name: raw.name || raw.contact?.name || '',
+    email: raw.email || raw.contact?.email,
+    phone: raw.phone || raw.contact?.phone,
+    targetRole: raw.targetRole || '',
+    skills: Array.isArray(raw.skills) ? raw.skills : [],
+    experience: Array.isArray(raw.experience) ? raw.experience : (Array.isArray(raw.experiences) ? raw.experiences : []),
+    education: Array.isArray(raw.education) ? raw.education : [],
+    strengths: Array.isArray(raw.strengths) ? raw.strengths : [],
+    risks: Array.isArray(raw.risks) ? raw.risks : [],
+    recommendedRoles: Array.isArray(raw.recommendedRoles) ? raw.recommendedRoles : [],
+  };
+}
+
+function normalizeResume(raw: any): Resume {
+  return {
+    ...raw,
+    uploadedAt: raw.uploadedAt || raw.createdAt || '',
+    analysisStatus: raw.analysisStatus || 'completed',
+    profile: normalizeProfile(raw.profile),
+  };
+}
+
 // 上传简历
 export const resumeApi = {
   upload: async (file: File | UploadFile): Promise<Resume> => {
@@ -73,19 +100,13 @@ export const resumeApi = {
     const response = await apiClient.get('/resumes');
     const payload = response.data as { resumes?: Array<Resume & { createdAt?: string; analysisStatus?: Resume['analysisStatus'] }> };
     return {
-      resumes: (payload.resumes || []).map((resume) => ({
-        ...resume,
-        uploadedAt: resume.uploadedAt || resume.createdAt || '',
-        // Candidate resume analysis is performed when the record is created;
-        // older records do not persist a separate status field.
-        analysisStatus: resume.analysisStatus || 'completed',
-      })),
+      resumes: (payload.resumes || []).map(normalizeResume),
     };
   },
 
   get: async (id: string): Promise<Resume> => {
     const response = await apiClient.get(`/resumes/${id}`);
-    return response.data;
+    return normalizeResume(response.data);
   },
 
   getAnalysis: async (id: string): Promise<ResumeAnalysis> => {
