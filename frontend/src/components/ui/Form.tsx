@@ -23,13 +23,12 @@ export function Form<T extends FieldValues>({
   className,
   layout = 'vertical',
 }: FormProps<T>) {
-  let hookFormInstance = hookForm;
-
-  if (!hookFormInstance) {
-    hookFormInstance = useForm<T>({
-      resolver: schema ? zodResolver(schema) : undefined,
-    } as UseFormProps<T>);
-  }
+  // Always call hooks in the same order. When a caller supplies an external
+  // form, the internal instance is simply ignored.
+  const internalHookForm = useForm<T>({
+    resolver: schema ? zodResolver(schema) : undefined,
+  } as UseFormProps<T>);
+  const hookFormInstance = hookForm || internalHookForm;
 
   const { handleSubmit } = hookFormInstance;
 

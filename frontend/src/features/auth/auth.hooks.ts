@@ -44,6 +44,7 @@ export const useLogout = () => {
   const navigate = useNavigate();
 
   return () => {
+    void authApi.logout().catch(() => undefined);
     logout();
     toast.info({ content: '已退出登录', duration: 'medium' });
     navigate('/login');

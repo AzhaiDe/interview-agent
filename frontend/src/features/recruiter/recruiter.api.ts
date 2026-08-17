@@ -1,130 +1,86 @@
 import { apiClient } from '@/services/api.client';
-import type { ResumeProfile } from '@/features/resume/resume.api';
+
+export interface JobRequirement {
+  label: string;
+  category?: string;
+  evidenceExpectation?: string;
+  weight?: number;
+}
 
 export interface RecruiterJob {
   id: string;
-  ownerId: string;
   title: string;
-  description: string;
-  requirements: string[];
-  status: 'draft' | 'active' | 'closed';
+  jdRaw: string;
+  level?: string;
+  rubricStatus?: 'draft' | 'confirmed';
   createdAt: string;
   updatedAt: string;
-  rubric?: any;
-  candidateCount?: number;
+  mustHave?: JobRequirement[];
+  niceToHave?: JobRequirement[];
+  responsibilities?: string[];
+  competencies?: string[];
+  interviewQuestions?: string[];
+  city?: string;
+  team?: string;
+  agentInsights?: { summary?: string; hiddenSignals?: string[] };
 }
 
 export interface RecruiterCandidate {
   id: string;
   jobId: string;
-  resumeId: string;
   fileName: string;
-  analysisStatus: 'pending' | 'analyzing' | 'completed' | 'failed';
-  analysis?: CandidateAnalysis;
-  matchScore?: number;
-  matchReason?: string;
-}
-
-export interface CandidateAnalysis {
-  profile: ResumeProfile;
-  strengths: string[];
-  risks: string[];
-  recommendedRoles: string[];
-}
-
-export interface MatchResult {
-  candidateId: string;
-  score: number;
-  reasons: string[];
-  concerns: string[];
-}
-
-export interface Task {
-  id: string;
-  type: 'analysis' | 'matching';
-  status: 'pending' | 'running' | 'completed' | 'failed';
-  progress: number;
-  total: number;
-  stage?: string;
-  mode?: 'model' | 'fallback' | 'mixed';
+  candidateName?: string;
+  analysisStatus?: 'queued' | 'analyzing' | 'completed' | 'fallback' | 'failed';
   createdAt: string;
-  updatedAt: string;
-}
-
-function normalizeJob(raw: any): RecruiterJob {
-  const job = raw?.job || raw || {};
-  const mustHave = Array.isArray(job.mustHave) ? job.mustHave.map((item: any) => item?.label || item).filter(Boolean) : [];
-  const niceToHave = Array.isArray(job.niceToHave) ? job.niceToHave.map((item: any) => item?.label || item).filter(Boolean) : [];
-  return {
-    ...job,
-    title: job.title || '未命名职位',
-    description: job.description || job.jdRaw || '',
-    requirements: Array.isArray(job.requirements) ? job.requirements : [...mustHave, ...niceToHave],
-    status: job.status || (job.rubricStatus === 'confirmed' ? 'active' : 'draft'),
-    candidateCount: Number.isFinite(job.candidateCount) ? job.candidateCount : (Array.isArray(job.candidates) ? job.candidates.length : 0),
-    createdAt: job.createdAt || job.updatedAt || '',
-    updatedAt: job.updatedAt || job.createdAt || '',
+  analysis?: {
+    overallScore: number;
+    recommendation: string;
+    strengths: string[];
+    risks: string[];
+    interviewFocus: string[];
+    missingRequirements?: string[];
   };
 }
 
-// 招聘 API
+export interface MatchResult extends RecruiterCandidate {
+  rank: number;
+  analysis: NonNullable<RecruiterCandidate['analysis']> & { overallScore: number };
+}
+
+export interface JobTask {
+  id: string;
+  status: string;
+  progress: number;
+  total: number;
+  stage?: string;
+  completed?: number;
+}
+
 export const recruiterApi = {
-  // 职位管理
-  createJob: async (data: {
-    title: string;
-    description: string;
-    requirements: string[];
-  }): Promise<RecruiterJob> => {
-    const response = await apiClient.post('/recruiter/jobs', data);
-    return normalizeJob(response.data);
-  },
+  createJob: (data: { title: string; jd: string }): Promise<{ job: RecruiterJob }> =>
+    apiClient.post('/recruiter/jobs', data),
 
-  listJobs: async (): Promise<{ jobs: RecruiterJob[] }> => {
-    const response = await apiClient.get('/recruiter/jobs');
-    return { jobs: (response.data?.jobs || []).map(normalizeJob) };
-  },
+  listJobs: (): Promise<{ jobs: RecruiterJob[] }> =>
+    apiClient.get('/recruiter/jobs'),
 
-  getJob: async (jobId: string): Promise<RecruiterJob> => {
-    const response = await apiClient.get(`/recruiter/jobs/${jobId}`);
-    return normalizeJob(response.data);
-  },
+  getJob: (jobId: string): Promise<{ job: RecruiterJob; candidates: RecruiterCandidate[]; results: MatchResult[] }> =>
+    apiClient.get(`/recruiter/jobs/${jobId}`),
 
-  confirmRubric: async (jobId: string, rubric: any): Promise<void> => {
-    await apiClient.post(`/recruiter/jobs/${jobId}/confirm-rubric`, { rubric });
-  },
+  confirmRubric: (jobId: string): Promise<{ job: RecruiterJob }> =>
+    apiClient.post(`/recruiter/jobs/${jobId}/confirm-rubric`),
 
-  // 候选人管理
-  uploadCandidate: async (jobId: string, file: File): Promise<RecruiterCandidate> => {
+  uploadCandidate: async (jobId: string, file: File) => {
     const formData = new FormData();
     formData.append('resume', file);
-    const response = await apiClient.post(`/recruiter/jobs/${jobId}/candidates`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    return response.data;
+    return apiClient.post(`/recruiter/jobs/${jobId}/candidates`, formData);
   },
 
-  addCandidateFromResume: async (jobId: string, resumeId: string): Promise<RecruiterCandidate> => {
-    const response = await apiClient.post(`/recruiter/jobs/${jobId}/candidates/from-resume`, {
-      resumeId,
-    });
-    return response.data;
-  },
+  startMatch: (jobId: string): Promise<{ taskId: string; status: string; task: JobTask }> =>
+    apiClient.post(`/recruiter/jobs/${jobId}/match`),
 
-  // 匹配
-  startMatch: async (jobId: string): Promise<Task> => {
-    const response = await apiClient.post(`/recruiter/jobs/${jobId}/match`);
-    return response.data;
-  },
+  getTask: (taskId: string): Promise<{ task: JobTask; results?: MatchResult[] }> =>
+    apiClient.get(`/recruiter/tasks/${taskId}`),
 
-  // 任务
-  getTask: async (taskId: string): Promise<Task> => {
-    const response = await apiClient.get(`/recruiter/tasks/${taskId}`);
-    return response.data;
-  },
-
-  // 结果
-  getResults: async (jobId: string): Promise<{ results: MatchResult[] }> => {
-    const response = await apiClient.get(`/recruiter/jobs/${jobId}/results`);
-    return response.data;
-  },
+  getResults: (jobId: string): Promise<{ results: MatchResult[] }> =>
+    apiClient.get(`/recruiter/jobs/${jobId}/results`),
 };

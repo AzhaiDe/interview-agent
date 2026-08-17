@@ -1,268 +1,64 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Card, Typography, Button, Table, Tag, Space, Modal, Select, Form } from 'antd';
-import {
-  PlayCircleOutlined,
-  EyeOutlined,
-  PauseCircleOutlined,
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-  ClockCircleOutlined,
-} from '@ant-design/icons';
-import { useInterviewHistory, useStartInterview, useAbandonInterview } from '@/features/interview/interview.hooks';
-import { useResumes } from '@/features/resume/resume.hooks';
-import type { InterviewSession } from '@/features/interview/interview.api';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button, Modal } from 'antd';
+import { useAbandonInterview, useInterviewHistory } from '@/features/interview/interview.hooks';
+import { INTERVIEW_TYPES, PRESSURE_LEVELS } from '@/lib/interview-options';
 import { Loading, Empty, Error as ErrorDisplay } from '@/components/ui';
-
-const { Title, Text } = Typography;
 
 export const InterviewListPage = () => {
   const navigate = useNavigate();
   const { data: interviews, isLoading, error, refetch } = useInterviewHistory();
-  const { data: resumes } = useResumes();
-  const startMutation = useStartInterview();
-  const abandonMutation = useAbandonInterview();
-  const [startModalVisible, setStartModalVisible] = useState(false);
-  const [form] = Form.useForm();
+  const abandon = useAbandonInterview();
 
-  const handleStart = () => {
-    form.validateFields().then((values) => {
-      startMutation.mutate(values, {
-        onSuccess: (session) => {
-          setStartModalVisible(false);
-          form.resetFields();
-          navigate(`/interview/${session.id}`);
-        },
-      });
-    });
-  };
-
-  const handleAbandon = (id: string) => {
-    Modal.confirm({
-      title: '确认放弃',
-      content: '确定要放弃这场面试吗？此操作不可撤销。',
-      okText: '放弃',
-      okType: 'danger',
-      cancelText: '取消',
-      onOk: () => abandonMutation.mutate(id),
-    });
-  };
-
-  const handleView = (id: string) => {
-    navigate(`/interview/${id}`);
-  };
-
-  const columns = [
-    {
-      title: '简历',
-      key: 'resume',
-      render: (_: any, record: InterviewSession) => {
-        const resume = resumes?.find((r) => r.id === record.resumeId);
-        return (
-          <div>
-            <Text strong>{resume?.fileName || '未知简历'}</Text>
-            <br />
-            <Text type="secondary" className="text-xs">
-              {resume?.profile?.targetRole || '-'}
-            </Text>
-          </div>
-        );
-      },
-    },
-    {
-      title: '状态',
-      dataIndex: 'status',
-      key: 'status',
-      render: (status: InterviewSession['status']) => {
-        const statusConfig = {
-          active: { color: 'processing', text: '进行中', icon: <ClockCircleOutlined /> },
-          paused: { color: 'warning', text: '已暂停', icon: <PauseCircleOutlined /> },
-          completed: { color: 'success', text: '已完成', icon: <CheckCircleOutlined /> },
-          abandoned: { color: 'default', text: '已放弃', icon: <CloseCircleOutlined /> },
-        };
-        const config = statusConfig[status] || statusConfig.active;
-        return (
-          <Tag color={config.color} icon={config.icon}>
-            {config.text}
-          </Tag>
-        );
-      },
-    },
-    {
-      title: '进度',
-      key: 'progress',
-      render: (_: any, record: InterviewSession) => {
-        if (record.currentQuestionIndex && record.totalQuestions) {
-          return (
-            <Text>
-              {record.currentQuestionIndex} / {record.totalQuestions}
-            </Text>
-          );
-        }
-        return <Text type="secondary">-</Text>;
-      },
-    },
-    {
-      title: '开始时间',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      render: (date: string) => (
-        <Text>{new Date(date).toLocaleString('zh-CN')}</Text>
-      ),
-    },
-    {
-      title: '操作',
-      key: 'actions',
-      render: (_: any, record: InterviewSession) => (
-        <Space size="small">
-          {record.status === 'active' && (
-            <Button
-              type="link"
-              icon={<PlayCircleOutlined />}
-              onClick={() => handleView(record.id)}
-            >
-              继续
-            </Button>
-          )}
-          {record.status === 'completed' && (
-            <Button
-              type="link"
-              icon={<EyeOutlined />}
-              onClick={() => handleView(record.id)}
-            >
-              查看报告
-            </Button>
-          )}
-          {record.status === 'active' && (
-            <Button
-              type="link"
-              danger
-              onClick={() => handleAbandon(record.id)}
-            >
-              放弃
-            </Button>
-          )}
-        </Space>
-      ),
-    },
-  ];
-
-  if (isLoading) {
-    return <Loading fullScreen text="加载面试列表..." />;
-  }
-
-  if (error) {
-    return (
-      <div className="p-6">
-        <ErrorDisplay
-          variant="result"
-          severity="error"
-          message="加载失败"
-          description={error.message}
-          onRetry={refetch}
-        />
-      </div>
-    );
-  }
+  if (isLoading) return <Loading fullScreen text="加载面试..." />;
+  if (error) return <ErrorDisplay variant="result" severity="error" message="加载失败" description={error.message} onRetry={refetch} />;
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      <div className="mb-6">
-        <Title level={2}>面试管理</Title>
-        <Text type="secondary">开始和管理 AI 面试</Text>
+    <div>
+      <div className="op-hero" style={{ display: 'flex', justifyContent: 'space-between', gap: 16, alignItems: 'flex-end' }}>
+        <div>
+          <div className="op-kicker">压力面试</div>
+          <h1 className="op-title">按岗位和证据密度追问</h1>
+          <p className="op-sub">先选简历和目标岗位，再选面试类型与压力等级。每一轮都会更新能力信念和缺失证据。</p>
+        </div>
+        <Button type="primary" size="large" onClick={() => navigate('/interview/new')}>开始新面试</Button>
       </div>
 
-      <Card className="mb-6">
-        <div className="flex justify-between items-center mb-4">
-          <div>
-            <Title level={4} className="mb-0">
-              面试历史
-            </Title>
-            <Text type="secondary">共 {interviews?.length || 0} 场面试</Text>
-          </div>
-          <Button
-            type="primary"
-            icon={<PlayCircleOutlined />}
-            onClick={() => setStartModalVisible(true)}
-          >
-            开始新面试
-          </Button>
+      {!interviews?.length ? (
+        <div className="op-card">
+          <Empty description="还没有面试记录" actionText="开始第一场" onAction={() => navigate('/interview/new')} />
         </div>
-
-        {interviews && interviews.length > 0 ? (
-          <Table
-            columns={columns}
-            dataSource={interviews}
-            rowKey="id"
-            pagination={{
-              showSizeChanger: true,
-              showQuickJumper: true,
-              showTotal: (total) => `共 ${total} 条`,
-            }}
-          />
-        ) : (
-          <Empty
-            description="暂无面试记录"
-            actionText="开始第一场面试"
-            onAction={() => setStartModalVisible(true)}
-          />
-        )}
-      </Card>
-
-      {/* 开始面试弹窗 */}
-      <Modal
-        title="开始新面试"
-        open={startModalVisible}
-        onCancel={() => {
-          setStartModalVisible(false);
-          form.resetFields();
-        }}
-        onOk={handleStart}
-        confirmLoading={startMutation.isPending}
-        okText="开始面试"
-        cancelText="取消"
-        width={500}
-      >
-        <Form form={form} layout="vertical">
-          <Form.Item
-            name="resumeId"
-            label="选择简历"
-            rules={[{ required: true, message: '请选择简历' }]}
-          >
-            <Select placeholder="请选择要面试的简历">
-              {resumes?.map((resume) => (
-                <Select.Option key={resume.id} value={resume.id}>
-                  {resume.fileName} - {resume.profile?.targetRole || '未分析'}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            name="difficulty"
-            label="难度"
-            initialValue="medium"
-          >
-            <Select>
-              <Select.Option value="easy">简单</Select.Option>
-              <Select.Option value="medium">中等</Select.Option>
-              <Select.Option value="hard">困难</Select.Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            name="interviewType"
-            label="面试类型"
-            initialValue="technical"
-          >
-            <Select>
-              <Select.Option value="technical">技术面试</Select.Option>
-              <Select.Option value="behavioral">行为面试</Select.Option>
-              <Select.Option value="system_design">系统设计</Select.Option>
-            </Select>
-          </Form.Item>
-        </Form>
-      </Modal>
+      ) : (
+        <div className="op-grid" style={{ gridTemplateColumns: '1fr' }}>
+          {interviews.map((item) => {
+            const type = INTERVIEW_TYPES.find((x) => x.id === item.interviewType)?.label || item.interviewType;
+            const pressure = PRESSURE_LEVELS.find((x) => x.level === item.pressure);
+            const done = item.status === 'finished' || Boolean(item.result);
+            return (
+              <div key={item.sessionId} className="op-card" style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
+                <div>
+                  <div style={{ fontWeight: 700 }}>{item.targetRole || '未指定岗位'}</div>
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', margin: '8px 0' }}>
+                    <span className={`op-chip ${done ? 'safe' : 'stable'}`}>{done ? item.result || '已完成' : item.phase || '进行中'}</span>
+                    <span className="op-chip">{type}</span>
+                    <span className={`op-chip ${pressure?.tag.includes('冲') ? 'reach' : 'stable'}`}>压力 {item.pressure} · {pressure?.label}</span>
+                    <span className="op-chip">第 {item.progress || 0} 轮</span>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                  {done ? (
+                    <Link to={`/interview/${item.sessionId}/report`}><Button type="primary">查看报告</Button></Link>
+                  ) : (
+                    <>
+                      <Link to={`/interview/${item.sessionId}`}><Button type="primary">继续</Button></Link>
+                      <Button danger onClick={() => Modal.confirm({ title: '结束本场？', onOk: () => abandon.mutate(item.sessionId) })}>放弃</Button>
+                    </>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

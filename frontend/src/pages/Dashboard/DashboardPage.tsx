@@ -1,86 +1,81 @@
-import { Typography, Card, Row, Col, Statistic, Button, Tag } from 'antd';
-import { FileTextOutlined, MessageOutlined, RiseOutlined, ArrowRightOutlined, BulbOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import { Button } from 'antd';
 import { useAuth } from '@/features/auth/auth.hooks';
-import { useNavigate } from 'react-router-dom';
-
-const { Title } = Typography;
+import { useResumes } from '@/features/resume/resume.hooks';
+import { useInterviewHistory } from '@/features/interview/interview.hooks';
 
 export const DashboardPage = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
+  const { data: resumes = [] } = useResumes();
+  const { data: interviews = [] } = useInterviewHistory();
+  const finished = interviews.filter((item) => item.status === 'finished' || item.result);
+  const avg = finished.length
+    ? finished.reduce((sum, item) => sum + (typeof item.progress === 'number' ? item.progress : 0), 0) / finished.length
+    : 0;
 
   return (
-    <div className="page-container dashboard-page">
-      <section className="dashboard-hero">
-        <div className="dashboard-hero-copy">
-          <Tag className="eyebrow-tag" icon={<BulbOutlined />}>AI 面试成长工作台</Tag>
-          <Title>你好，{user.displayName || '同学'}</Title>
-          <Typography.Paragraph>
-            从简历洞察到压力面试，持续训练并沉淀可验证的能力证据。
-          </Typography.Paragraph>
-          <div className="dashboard-actions">
-            <Button type="primary" size="large" icon={<ArrowRightOutlined />} onClick={() => navigate('/resume')}>
-              开始分析简历
-            </Button>
-            <Button size="large" onClick={() => navigate('/interview')}>进入模拟面试</Button>
-          </div>
-        </div>
-        <div className="dashboard-hero-art" aria-hidden="true">
-          <div className="hero-orbit hero-orbit-one" />
-          <div className="hero-orbit hero-orbit-two" />
-          <div className="hero-glass-card">
-            <span className="hero-glass-label">本周能力画像</span>
-            <strong>准备好迎接下一场面试</strong>
-            <div className="hero-progress"><i /></div>
-            <small>从一次练习开始，逐步建立优势</small>
-          </div>
-        </div>
-      </section>
-
-      <div className="section-heading">
-        <div><Title level={3}>你的训练概览</Title><Typography.Text type="secondary">把每一次准备都变成下一次机会</Typography.Text></div>
-        <Button type="link" onClick={() => navigate('/growth')}>查看成长路径 <ArrowRightOutlined /></Button>
+    <div>
+      <div className="op-hero">
+        <div className="op-kicker">工作台</div>
+        <h1 className="op-title">你好，{user.displayName || '候选人'}</h1>
+        <p className="op-sub">先分析简历证据，再按目标岗位开始压力面试。系统会记录能力信念、缺失证据和下一步训练。</p>
       </div>
 
-      <Row gutter={[16, 16]}>
-        <Col xs={24} sm={12} lg={8}>
-          <Card className="metric-card metric-card-blue">
-            <Statistic
-              title="简历分析"
-              value={0}
-              prefix={<FileTextOutlined />}
-              suffix="份"
-            />
-          </Card>
-        </Col>
+      <div className="op-grid op-grid-3" style={{ marginBottom: 20 }}>
+        <div className="op-card op-stat">
+          <span className="op-chip">简历</span>
+          <b>{resumes.length}</b>
+          <div style={{ color: 'var(--muted)', fontSize: 13 }}>已上传并解析</div>
+        </div>
+        <div className="op-card op-stat">
+          <span className="op-chip stable">面试</span>
+          <b>{interviews.length}</b>
+          <div style={{ color: 'var(--muted)', fontSize: 13 }}>累计场次</div>
+        </div>
+        <div className="op-card op-stat">
+          <span className="op-chip reach">进度</span>
+          <b>{finished.length}</b>
+          <div style={{ color: 'var(--muted)', fontSize: 13 }}>已完成报告 · 平均轮次 {avg.toFixed(1)}</div>
+        </div>
+      </div>
 
-        <Col xs={24} sm={12} lg={8}>
-          <Card className="metric-card metric-card-purple">
-            <Statistic
-              title="模拟面试"
-              value={0}
-              prefix={<MessageOutlined />}
-              suffix="次"
-            />
-          </Card>
-        </Col>
+      <div className="op-grid op-grid-3">
+        <div className="op-card">
+          <span className="op-chip">01</span>
+          <h3 style={{ margin: '12px 0 8px' }}>简历分析</h3>
+          <p className="op-sub">抽取项目、技能、量化证据和风险，生成可引用的候选人画像。</p>
+          <Link to="/resume"><Button type="primary" style={{ marginTop: 12 }}>去分析</Button></Link>
+        </div>
+        <div className="op-card">
+          <span className="op-chip stable">02</span>
+          <h3 style={{ margin: '12px 0 8px' }}>选择岗位开面</h3>
+          <p className="op-sub">后端 / AI / 前端，或使用简历推荐岗位。再选面试类型和压力等级。</p>
+          <Link to="/interview/new"><Button type="primary" style={{ marginTop: 12 }}>开始面试</Button></Link>
+        </div>
+        <div className="op-card">
+          <span className="op-chip reach">03</span>
+          <h3 style={{ margin: '12px 0 8px' }}>查看成长</h3>
+          <p className="op-sub">报告引用证据账本，给出 7 天训练计划和建议压力。</p>
+          <Link to="/growth"><Button style={{ marginTop: 12 }}>查看报告</Button></Link>
+        </div>
+      </div>
 
-        <Col xs={24} sm={12} lg={8}>
-          <Card className="metric-card metric-card-green">
-            <Statistic
-              title="能力成长"
-              value={0}
-              prefix={<RiseOutlined />}
-              suffix="分"
-            />
-          </Card>
-        </Col>
-      </Row>
-
-      <section className="dashboard-next-step">
-        <div><span className="next-step-kicker">NEXT STEP</span><Title level={4}>让 AI 帮你找到真正的面试突破口</Title><Typography.Text type="secondary">上传一份最新简历，生成岗位匹配度和重点追问。</Typography.Text></div>
-        <Button type="primary" ghost onClick={() => navigate('/resume')}>去简历中心 <ArrowRightOutlined /></Button>
-      </section>
+      {interviews.length > 0 && (
+        <div className="op-card" style={{ marginTop: 20 }}>
+          <h3>最近面试</h3>
+          {interviews.slice(0, 5).map((item) => (
+            <div key={item.sessionId} style={{ display: 'flex', justifyContent: 'space-between', gap: 12, padding: '12px 0', borderBottom: '1px solid var(--line)' }}>
+              <div>
+                <div style={{ fontWeight: 700 }}>{item.targetRole}</div>
+                <div className="op-sub">{item.phase || item.status} · 第 {item.progress || 0} 轮</div>
+              </div>
+              <Link to={item.result ? `/interview/${item.sessionId}/report` : `/interview/${item.sessionId}`}>
+                <Button>{item.result ? '报告' : '继续'}</Button>
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

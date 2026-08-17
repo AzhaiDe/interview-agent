@@ -78,7 +78,9 @@ app.addHook("onRequest", async (request, reply) => {
   // remain unauthenticated so Docker/systemd can determine container health.
   const isHealthCheck = request.url.split("?", 1)[0] === "/api/v1/health";
   if (config.requireAuth && !isPublicPath && !isAuthEndpoint && !isHealthCheck) {
-    const rawToken = (request.cookies as Record<string, string | undefined>)[AUTH_COOKIE_NAME];
+    const header = String(request.headers.authorization || "");
+    const bearer = header.toLowerCase().startsWith("bearer ") ? header.slice(7).trim() : "";
+    const rawToken = (request.cookies as Record<string, string | undefined>)[AUTH_COOKIE_NAME] || bearer;
     if (!rawToken) return reply.code(401).send({ error: "请先登录" });
     const payload = verifyAccessToken(rawToken);
     if (!payload) return reply.code(401).send({ error: "登录已过期，请重新登录" });

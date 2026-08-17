@@ -3,7 +3,8 @@ import { useAuthStore } from '@/features/auth/auth.store';
 
 export const apiClient = axios.create({
   baseURL: '/api/v1',
-  timeout: 30_000,
+  timeout: 120_000,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -19,32 +20,30 @@ export const describeApiError = (error: unknown): string => {
   return `${type}：${detail}`;
 };
 
-// Request interceptor: inject auth token
 apiClient.interceptors.request.use(
   (config) => {
     const token = useAuthStore.getState().token;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    if (typeof FormData !== 'undefined' && config.data instanceof FormData) {
+      delete config.headers['Content-Type'];
+    }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error),
 );
 
-// Response interceptor: unified error handling
 apiClient.interceptors.response.use(
   // Keep the standard Axios response shape. Feature APIs intentionally read
   // `response.data`; stripping it here would make those methods return
   // `undefined` after they unwrap the payload a second time.
   (response) => response,
   (error) => {
-    // A failed login/register request must not clear the existing client state.
     if (error.response?.status === 401 && !error.config?.url?.includes('/auth/')) {
       useAuthStore.getState().logout();
     }
     error.message = describeApiError(error);
     return Promise.reject(error);
-  }
+  },
 );

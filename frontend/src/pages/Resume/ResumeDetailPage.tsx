@@ -1,243 +1,99 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { Card, Typography, Tag, Descriptions, Button, Space, Divider } from 'antd';
-import {
-  ArrowLeftOutlined,
-  UserOutlined,
-  MailOutlined,
-  PhoneOutlined,
-  BookOutlined,
-  TrophyOutlined,
-  WarningOutlined,
-} from '@ant-design/icons';
-import { useResume } from '@/features/resume/resume.hooks';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Button } from 'antd';
+import { useAnalyzeResume, useResume } from '@/features/resume/resume.hooks';
 import { Loading, Empty, Error as ErrorDisplay } from '@/components/ui';
-
-const { Title, Text, Paragraph } = Typography;
+import { roleBand } from '@/lib/interview-options';
 
 export const ResumeDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { data: resume, isLoading, error, refetch } = useResume(id || '');
+  const analyze = useAnalyzeResume();
+  const profile = resume?.profile;
 
-  if (isLoading) {
-    return <Loading fullScreen text="加载简历详情..." />;
-  }
+  if (isLoading) return <Loading fullScreen text="加载分析报告..." />;
+  if (error) return <ErrorDisplay variant="result" severity="error" message="加载失败" description={error.message} onRetry={refetch} />;
+  if (!resume) return <Empty description="简历不存在" />;
 
-  if (error) {
-    return (
-      <div className="p-6">
-        <ErrorDisplay
-          variant="result"
-          severity="error"
-          message="加载失败"
-          description={error.message}
-          onRetry={refetch}
-        />
-      </div>
-    );
-  }
-
-  if (!resume) {
-    return <Empty description="简历不存在" />;
-  }
-
-  const profile = resume.profile;
+  const roles = [...(profile?.recommendedRoles || [])].sort((a, b) => b.score - a.score);
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      {/* 返回按钮 */}
-      <Button
-        icon={<ArrowLeftOutlined />}
-        onClick={() => navigate('/resume')}
-        className="mb-4"
-      >
-        返回列表
-      </Button>
-
-      {/* 基本信息 */}
-      <Card className="mb-6">
-        <div className="flex items-start justify-between mb-4">
-          <div>
-            <Title level={2} className="mb-2">
-              {profile?.name || resume.fileName}
-            </Title>
-            <Space>
-              <Tag color="blue">{profile?.targetRole || '未分析'}</Tag>
-              <Tag color={
-                resume.analysisStatus === 'completed' ? 'green' :
-                resume.analysisStatus === 'analyzing' ? 'blue' :
-                resume.analysisStatus === 'failed' ? 'red' : 'default'
-              }>
-                {resume.analysisStatus === 'completed' ? '已分析' :
-                 resume.analysisStatus === 'analyzing' ? '分析中' :
-                 resume.analysisStatus === 'failed' ? '分析失败' : '待分析'}
-              </Tag>
-            </Space>
-          </div>
+    <div>
+      <Button onClick={() => navigate('/resume')} style={{ marginBottom: 16 }}>返回列表</Button>
+      <div className="op-hero">
+        <div className="op-kicker">分析完成</div>
+        <h1 className="op-title">{profile?.name || resume.fileName}</h1>
+        <p className="op-sub">{profile?.summary || '已完成结构化解析。建议再跑一次模型分析，以补全贡献度和引文。'}</p>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}>
+          <span className="op-chip stable">{profile?.targetRole || '待选择岗位'}</span>
+          <span className="op-chip">{profile?.analysisMode === 'model' ? '模型增强' : '本地解析'}</span>
+          {profile?.contact?.email && <span className="op-chip">{profile.contact.email}</span>}
         </div>
+        <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
+          <Button type="primary" loading={analyze.isPending} onClick={() => id && analyze.mutate(id)}>启动模型分析</Button>
+          <Button onClick={() => navigate(`/interview/new?resumeId=${resume.id}`)}>用这份简历开面</Button>
+        </div>
+      </div>
 
-        {profile && (
-          <Descriptions bordered column={2}>
-            <Descriptions.Item label={<><UserOutlined /> 姓名</>}>
-              {profile.name}
-            </Descriptions.Item>
-            <Descriptions.Item label={<><MailOutlined /> 邮箱</>}>
-              {profile.email || '-'}
-            </Descriptions.Item>
-            <Descriptions.Item label={<><PhoneOutlined /> 电话</>}>
-              {profile.phone || '-'}
-            </Descriptions.Item>
-            <Descriptions.Item label={<><BookOutlined /> 目标岗位</>}>
-              {profile.targetRole}
-            </Descriptions.Item>
-          </Descriptions>
-        )}
-      </Card>
-
-      {/* 技能标签 */}
-      {profile && profile.skills.length > 0 && (
-        <Card title="技能" className="mb-6">
-          <div className="flex flex-wrap gap-2">
-            {profile.skills.map((skill) => (
-              <Tag key={skill} color="blue" className="text-sm px-3 py-1">
-                {skill}
-              </Tag>
-            ))}
-          </div>
-        </Card>
-      )}
-
-      {/* 工作经验 */}
-      {profile && profile.experience.length > 0 && (
-        <Card title="工作经验" className="mb-6">
-          {profile.experience.map((exp, index) => (
-            <div key={index} className="mb-4 last:mb-0">
-              <div className="flex items-center justify-between mb-2">
-                <div>
-                  <Text strong className="text-base">
-                    {exp.role}
-                  </Text>
-                  <Text type="secondary" className="ml-2">
-                    @ {exp.company}
-                  </Text>
-                </div>
-                <Tag>{exp.duration}</Tag>
-              </div>
-              <Paragraph type="secondary" className="mb-2">
-                {exp.description}
-              </Paragraph>
-              {exp.achievements && exp.achievements.length > 0 && (
-                <ul className="list-disc list-inside text-sm text-gray-600">
-                  {exp.achievements.map((achievement, i) => (
-                    <li key={i}>{achievement}</li>
-                  ))}
-                </ul>
-              )}
-              {index < profile.experience.length - 1 && <Divider />}
+      <div className="op-grid op-grid-3" style={{ marginBottom: 16 }}>
+        {(roles.slice(0, 3).length ? roles.slice(0, 3) : [{ role: profile?.targetRole || '待定', score: 60, reasons: ['尚未生成推荐岗位'] }]).map((item) => {
+          const band = roleBand(item.score);
+          return (
+            <div key={item.role} className="op-card">
+              <span className={`op-chip ${band.tone}`}>{band.label}</span>
+              <h3 style={{ margin: '10px 0 6px' }}>{item.role}</h3>
+              <div style={{ fontSize: 24, fontWeight: 800, letterSpacing: '-0.04em' }}>{Math.round(item.score)}</div>
+              <p className="op-sub">{item.reasons?.join('；') || '可结合项目证据继续核验'}</p>
             </div>
-          ))}
-        </Card>
+          );
+        })}
+      </div>
+
+      <div className="op-card" style={{ marginBottom: 16 }}>
+        <h3>技能标签</h3>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 10 }}>
+          {(profile?.skills || []).map((skill) => <span key={skill} className="op-chip stable">{skill}</span>)}
+          {!profile?.skills?.length && <span className="op-chip">暂无技能</span>}
+        </div>
+      </div>
+
+      <div className="op-grid op-grid-2" style={{ marginBottom: 16 }}>
+        <div className="op-card">
+          <span className="op-chip safe">优势</span>
+          <ul style={{ marginTop: 12, paddingLeft: 18, color: 'var(--ink)' }}>
+            {(profile?.strengths || ['尚未识别优势']).map((item) => <li key={item} style={{ marginBottom: 8 }}>{item}</li>)}
+          </ul>
+        </div>
+        <div className="op-card">
+          <span className="op-chip warn">风险提示</span>
+          <ul style={{ marginTop: 12, paddingLeft: 18 }}>
+            {(profile?.risks || ['尚未识别风险']).map((item) => <li key={item} style={{ marginBottom: 8 }}>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      {(profile?.education || []).length > 0 && (
+        <div className="op-card" style={{ marginBottom: 16 }}>
+          <h3>教育经历</h3>
+          <ul style={{ marginTop: 10, paddingLeft: 18 }}>
+            {profile!.education.map((item) => <li key={item} style={{ marginBottom: 6 }}>{item}</li>)}
+          </ul>
+        </div>
       )}
 
-      {/* 教育背景 */}
-      {profile && profile.education.length > 0 && (
-        <Card title="教育背景" className="mb-6">
-          {profile.education.map((edu, index) => (
-            <div key={index} className="mb-4 last:mb-0">
-              <div className="flex items-center justify-between mb-2">
-                <div>
-                  <Text strong className="text-base">
-                    {edu.school}
-                  </Text>
-                </div>
-                <Tag>{edu.year}</Tag>
-              </div>
-              <Text>
-                {edu.degree} - {edu.major}
-              </Text>
+      <div className="op-card">
+        <h3>项目与经历</h3>
+        {(profile?.experiences || []).map((exp) => (
+          <div key={exp.id || exp.title} style={{ padding: '14px 0', borderBottom: '1px solid var(--line)' }}>
+            <div style={{ fontWeight: 700 }}>{exp.title} {exp.role ? `· ${exp.role}` : ''}</div>
+            <div style={{ color: 'var(--muted)', fontSize: 13, margin: '4px 0 8px' }}>{exp.summary}</div>
+            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+              {(exp.technologies || []).map((tech) => <span key={tech} className="op-chip">{tech}</span>)}
             </div>
-          ))}
-        </Card>
-      )}
-
-      {/* 优势 */}
-      {profile && profile.strengths.length > 0 && (
-        <Card
-          title={
-            <span>
-              <TrophyOutlined className="text-green-500 mr-2" />
-              优势
-            </span>
-          }
-          className="mb-6"
-        >
-          <div className="flex flex-wrap gap-2">
-            {profile.strengths.map((strength) => (
-              <Tag key={strength} color="green" className="text-sm px-3 py-1">
-                {strength}
-              </Tag>
-            ))}
           </div>
-        </Card>
-      )}
-
-      {/* 风险 */}
-      {profile && profile.risks.length > 0 && (
-        <Card
-          title={
-            <span>
-              <WarningOutlined className="text-orange-500 mr-2" />
-              风险
-            </span>
-          }
-          className="mb-6"
-        >
-          <div className="flex flex-wrap gap-2">
-            {profile.risks.map((risk) => (
-              <Tag key={risk} color="orange" className="text-sm px-3 py-1">
-                {risk}
-              </Tag>
-            ))}
-          </div>
-        </Card>
-      )}
-
-      {/* 推荐岗位 */}
-      {profile && profile.recommendedRoles.length > 0 && (
-        <Card title="推荐岗位">
-          <div className="space-y-3">
-            {profile.recommendedRoles.map((rec, index) => (
-              <div
-                key={index}
-                className="p-4 border border-gray-200 rounded-lg hover:border-primary-500 transition-colors"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <Text strong className="text-base">
-                    {rec.role}
-                  </Text>
-                  <Tag color="blue">
-                    匹配度：{((rec.confidence ?? (rec as any).score ?? 0) * 100).toFixed(0)}%
-                  </Tag>
-                </div>
-                <Text type="secondary">{rec.reason}</Text>
-              </div>
-            ))}
-          </div>
-        </Card>
-      )}
-
-      {/* 未分析提示 */}
-      {!profile && (
-        <Card className="text-center py-12">
-          <Empty
-            description="简历尚未分析"
-            actionText="开始分析"
-            onAction={() => {
-              // TODO: 实现分析功能
-            }}
-          />
-        </Card>
-      )}
+        ))}
+        {!profile?.experiences?.length && <p className="op-sub">没有解析到项目经历。</p>}
+      </div>
     </div>
   );
 };

@@ -1,329 +1,191 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { Card, Typography, Button, Table, Tag, Space, Modal, Upload, Progress } from 'antd';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Button, Modal, Progress, Upload } from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
+import type { UploadFile } from 'antd';
+import { useQueryClient } from '@tanstack/react-query';
 import {
-  ArrowLeftOutlined,
-  UploadOutlined,
-  PlayCircleOutlined,
-  InboxOutlined,
-} from '@ant-design/icons';
-import type { UploadFile, UploadProps } from 'antd';
-import {
+  recruiterKeys,
+  useConfirmRubric,
   useRecruiterJob,
-  useUploadCandidate,
   useStartMatch,
-  useMatchResults,
   useTask,
+  useUploadCandidate,
 } from '@/features/recruiter/recruiter.hooks';
-import type { RecruiterCandidate } from '@/features/recruiter/recruiter.api';
 import { Loading, Empty, Error as ErrorDisplay } from '@/components/ui';
 
-const { Title, Text, Paragraph } = Typography;
-const { Dragger } = Upload;
+const recLabel: Record<string, string> = {
+  strong_interview: '强烈建议面试',
+  interview: '建议面试',
+  manual_review: '人工复核',
+  hold: '暂缓',
+};
 
 export const RecruiterJobDetailPage = () => {
   const { jobId } = useParams<{ jobId: string }>();
   const navigate = useNavigate();
-  const { data: job, isLoading, error, refetch } = useRecruiterJob(jobId || '');
-  const uploadMutation = useUploadCandidate();
-  const matchMutation = useStartMatch();
-  const { data: results } = useMatchResults(jobId || '');
+  const queryClient = useQueryClient();
+  const { data, isLoading, error, refetch } = useRecruiterJob(jobId || '');
+  const confirm = useConfirmRubric();
+  const upload = useUploadCandidate();
+  const match = useStartMatch();
+  const [open, setOpen] = useState(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [uploadModalVisible, setUploadModalVisible] = useState(false);
-  const [matchTaskId, setMatchTaskId] = useState<string | null>(null);
-  const { data: task } = useTask(matchTaskId || '');
+  const [taskId, setTaskId] = useState('');
+  const { data: taskPayload } = useTask(taskId);
+  const task = taskPayload?.task;
 
-  const handleUpload = () => {
-    if (fileList.length === 0 || !jobId) return;
-
-    const file = fileList[0];
-    if (file.originFileObj) {
-      uploadMutation.mutate(
-        { jobId, file: file.originFileObj },
-        {
-          onSuccess: () => {
-            setFileList([]);
-            setUploadModalVisible(false);
-          },
-        }
-      );
+  useEffect(() => {
+    if (task?.status === 'completed' && jobId) {
+      queryClient.invalidateQueries({ queryKey: recruiterKeys.jobs.detail(jobId) });
     }
-  };
+  }, [jobId, queryClient, task?.status]);
 
-  const handleStartMatch = () => {
-    if (!jobId) return;
-    matchMutation.mutate(jobId, {
-      onSuccess: (task) => {
-        setMatchTaskId(task.id);
+  if (isLoading) return <Loading fullScreen text="加载岗位..." />;
+  if (error) return <ErrorDisplay variant="result" severity="error" message="加载失败" description={error.message} onRetry={refetch} />;
+  if (!data?.job) return <Empty description="岗位不存在" />;
+
+  const { job, candidates = [], results = [] } = data;
+  const ranked = [...results].sort((a, b) => (a.rank || 99) - (b.rank || 99));
+
+  const submitUpload = () => {
+    const file = fileList[0]?.originFileObj;
+    if (!file || !jobId) return;
+    upload.mutate({ jobId, file }, {
+      onSuccess: () => {
+        setOpen(false);
+        setFileList([]);
       },
     });
   };
 
-  const uploadProps: UploadProps = {
-    name: 'resume',
-    multiple: false,
-    maxCount: 1,
-    fileList,
-    beforeUpload: () => false,
-    onChange: ({ fileList: newFileList }) => {
-      setFileList(newFileList.slice(-1));
-    },
-    onRemove: () => {
-      setFileList([]);
-    },
-    accept: '.pdf,.doc,.docx,.txt',
-  };
-
-  const candidateColumns = [
-    {
-      title: '文件名',
-      dataIndex: 'fileName',
-      key: 'fileName',
-    },
-    {
-      title: '分析状态',
-      dataIndex: 'analysisStatus',
-      key: 'analysisStatus',
-      render: (status: RecruiterCandidate['analysisStatus']) => {
-        const statusConfig = {
-          pending: { color: 'default', text: '待分析' },
-          analyzing: { color: 'processing', text: '分析中' },
-          completed: { color: 'success', text: '已完成' },
-          failed: { color: 'error', text: '失败' },
-        };
-        const config = statusConfig[status] || statusConfig.pending;
-        return <Tag color={config.color}>{config.text}</Tag>;
-      },
-    },
-    {
-      title: '匹配分数',
-      dataIndex: 'matchScore',
-      key: 'matchScore',
-      render: (score: number) => {
-        if (!score) return <Text type="secondary">-</Text>;
-        return (
-          <Tag color={score >= 0.8 ? 'green' : score >= 0.6 ? 'blue' : 'orange'}>
-            {(score * 100).toFixed(0)}%
-          </Tag>
-        );
-      },
-    },
-  ];
-
-  const resultColumns = [
-    {
-      title: '候选人',
-      key: 'candidate',
-      render: (_: any, record: any) => (
-        <Text strong>{record.candidateId}</Text>
-      ),
-    },
-    {
-      title: '匹配分数',
-      dataIndex: 'score',
-      key: 'score',
-      render: (score: number) => (
-        <Tag color={score >= 0.8 ? 'green' : score >= 0.6 ? 'blue' : 'orange'}>
-          {(score * 100).toFixed(0)}%
-        </Tag>
-      ),
-      sorter: (a: any, b: any) => a.score - b.score,
-      defaultSortOrder: 'descend' as const,
-    },
-    {
-      title: '匹配原因',
-      key: 'reasons',
-      render: (_: any, record: any) => (
-        <div className="flex flex-wrap gap-1">
-          {record.reasons?.slice(0, 2).map((reason: string, i: number) => (
-            <Tag key={i} color="green">
-              {reason}
-            </Tag>
-          ))}
-          {record.reasons?.length > 2 && <Tag>+{record.reasons.length - 2}</Tag>}
-        </div>
-      ),
-    },
-    {
-      title: '关注点',
-      key: 'concerns',
-      render: (_: any, record: any) => (
-        <div className="flex flex-wrap gap-1">
-          {record.concerns?.slice(0, 2).map((concern: string, i: number) => (
-            <Tag key={i} color="orange">
-              {concern}
-            </Tag>
-          ))}
-          {record.concerns?.length > 2 && <Tag>+{record.concerns.length - 2}</Tag>}
-        </div>
-      ),
-    },
-  ];
-
-  if (isLoading) {
-    return <Loading fullScreen text="加载职位详情..." />;
-  }
-
-  if (error) {
-    return (
-      <div className="p-6">
-        <ErrorDisplay
-          variant="result"
-          severity="error"
-          message="加载失败"
-          description={error.message}
-          onRetry={refetch}
-        />
-      </div>
-    );
-  }
-
-  if (!job) {
-    return <Empty description="职位不存在" />;
-  }
-
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      {/* 返回按钮 */}
-      <Button
-        icon={<ArrowLeftOutlined />}
-        onClick={() => navigate('/recruiter')}
-        className="mb-4"
-      >
-        返回列表
-      </Button>
+    <div>
+      <Button onClick={() => navigate('/recruiter')} style={{ marginBottom: 16 }}>返回列表</Button>
+      <div className="op-hero">
+        <div className="op-kicker">岗位 Rubric</div>
+        <h1 className="op-title">{job.title}</h1>
+        <p className="op-sub">{job.agentInsights?.summary || job.jdRaw?.slice(0, 180)}</p>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}>
+          <span className={`op-chip ${job.rubricStatus === 'confirmed' ? 'safe' : 'warn'}`}>
+            {job.rubricStatus === 'confirmed' ? '已确认' : '草稿'}
+          </span>
+          {job.level && <span className="op-chip">{job.level}</span>}
+          {job.team && <span className="op-chip">{job.team}</span>}
+          {job.city && <span className="op-chip">{job.city}</span>}
+        </div>
+        <div style={{ display: 'flex', gap: 8, marginTop: 16, flexWrap: 'wrap' }}>
+          {job.rubricStatus !== 'confirmed' && (
+            <Button type="primary" loading={confirm.isPending} onClick={() => jobId && confirm.mutate(jobId)}>确认评分尺</Button>
+          )}
+          <Button onClick={() => setOpen(true)}>上传候选人</Button>
+          <Button
+            type="primary"
+            disabled={job.rubricStatus !== 'confirmed' || !candidates.length}
+            loading={match.isPending}
+            onClick={() => jobId && match.mutate(jobId, { onSuccess: (res) => setTaskId(res.taskId) })}
+          >
+            开始匹配
+          </Button>
+        </div>
+      </div>
 
-      {/* 职位信息 */}
-      <Card className="mb-6">
-        <div className="flex items-start justify-between mb-4">
-          <div>
-            <Title level={2} className="mb-2">
-              {job.title}
-            </Title>
-            <Space>
-              <Tag color={
-                job.status === 'active' ? 'processing' :
-                job.status === 'closed' ? 'default' : 'warning'
-              }>
-                {job.status === 'active' ? '招聘中' :
-                 job.status === 'closed' ? '已关闭' : '草稿'}
-              </Tag>
-              <Text type="secondary">
-                {job.candidateCount || 0} 位候选人
-              </Text>
-            </Space>
+      {task && task.status !== 'completed' && (
+        <div className="op-card" style={{ marginBottom: 16 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <strong>{task.stage || '匹配进行中'}</strong>
+            <span className="op-chip stable">{task.status}</span>
           </div>
-          <Space>
-            <Button
-              icon={<UploadOutlined />}
-              onClick={() => setUploadModalVisible(true)}
-            >
-              上传候选人
-            </Button>
-            <Button
-              type="primary"
-              icon={<PlayCircleOutlined />}
-              onClick={handleStartMatch}
-              loading={matchMutation.isPending}
-            >
-              开始匹配
-            </Button>
-          </Space>
+          <Progress percent={task.total ? Math.round((task.progress / task.total) * 100) : 0} style={{ marginTop: 12 }} />
         </div>
+      )}
 
-        <div className="mb-4">
-          <Text strong>职位描述：</Text>
-          <Paragraph className="mt-2">{job.description}</Paragraph>
-        </div>
-
-        <div>
-          <Text strong>岗位要求：</Text>
-          <ul className="mt-2 list-disc list-inside">
-            {job.requirements?.map((req, i) => (
-              <li key={i}>{req}</li>
+      <div className="op-grid op-grid-2" style={{ marginBottom: 16 }}>
+        <div className="op-card">
+          <span className="op-chip reach">硬性要求</span>
+          <ul style={{ marginTop: 12, paddingLeft: 18 }}>
+            {(job.mustHave || []).map((item) => (
+              <li key={item.label} style={{ marginBottom: 8 }}>
+                <strong>{item.label}</strong>
+                {item.evidenceExpectation && <div className="op-sub">{item.evidenceExpectation}</div>}
+              </li>
             ))}
+            {!job.mustHave?.length && <li className="op-sub">尚未抽出硬性要求</li>}
           </ul>
         </div>
-      </Card>
+        <div className="op-card">
+          <span className="op-chip stable">加分项 / 职责</span>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}>
+            {(job.niceToHave || []).map((item) => <span key={item.label} className="op-chip">{item.label}</span>)}
+            {(job.responsibilities || []).slice(0, 6).map((item) => <span key={item} className="op-chip stable">{item}</span>)}
+          </div>
+        </div>
+      </div>
 
-      {/* 匹配任务进度 */}
-      {task && task.status !== 'completed' && (
-        <Card className="mb-6" title="匹配进度">
-          <div className="mb-4">
-            <div className="flex items-center justify-between mb-2">
-              <Text>{task.stage || '处理中...'}</Text>
-              <Tag color={
-                task.status === 'running' ? 'processing' :
-                task.status === 'failed' ? 'error' : 'default'
-              }>
-                {task.status === 'running' ? '进行中' :
-                 task.status === 'failed' ? '失败' : '等待中'}
-              </Tag>
+      <div className="op-card" style={{ marginBottom: 16 }}>
+        <h3>候选人 {candidates.length}</h3>
+        {!candidates.length ? (
+          <Empty description="还没有候选人简历" actionText="上传一份" onAction={() => setOpen(true)} />
+        ) : (
+          <div style={{ marginTop: 12 }}>
+            {candidates.map((item) => (
+              <div key={item.id} style={{ padding: '12px 0', borderBottom: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', gap: 12 }}>
+                <div>
+                  <div style={{ fontWeight: 700 }}>{item.candidateName || item.fileName}</div>
+                  <div className="op-sub">{item.fileName}</div>
+                </div>
+                <span className={`op-chip ${item.analysisStatus === 'completed' ? 'safe' : 'stable'}`}>{item.analysisStatus || 'queued'}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="op-card">
+        <h3>匹配结果</h3>
+        {!ranked.length ? (
+          <p className="op-sub" style={{ marginTop: 12 }}>确认 Rubric 并上传候选人后，点击「开始匹配」。</p>
+        ) : (
+          ranked.map((item) => (
+            <div key={item.id} className="op-card" style={{ marginTop: 12, boxShadow: 'none' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
+                <div>
+                  <span className="op-chip reach">#{item.rank}</span>
+                  <h3 style={{ margin: '8px 0 4px' }}>{item.candidateName || item.fileName}</h3>
+                  <div className="op-sub">{recLabel[item.analysis?.recommendation] || item.analysis?.recommendation}</div>
+                </div>
+                <div style={{ fontSize: 28, fontWeight: 800 }}>{Math.round(item.analysis?.overallScore || 0)}</div>
+              </div>
+              <div className="op-grid op-grid-2" style={{ marginTop: 12 }}>
+                <div>
+                  <span className="op-chip safe">优势</span>
+                  <ul style={{ paddingLeft: 18, marginTop: 8 }}>
+                    {(item.analysis?.strengths || []).slice(0, 4).map((s) => <li key={s}>{s}</li>)}
+                  </ul>
+                </div>
+                <div>
+                  <span className="op-chip warn">风险</span>
+                  <ul style={{ paddingLeft: 18, marginTop: 8 }}>
+                    {(item.analysis?.risks || []).slice(0, 4).map((s) => <li key={s}>{s}</li>)}
+                  </ul>
+                </div>
+              </div>
             </div>
-            <Progress percent={Math.round(((task.progress || 0) / Math.max(1, task.total || 0)) * 100)} />
-            <Text type="secondary" className="text-sm mt-2 block">
-              {task.progress} / {task.total}
-            </Text>
-          </div>
-        </Card>
-      )}
-
-      {/* 候选人列表 */}
-      <Card title="候选人" className="mb-6">
-        {job.candidateCount && job.candidateCount > 0 ? (
-          <Table
-            columns={candidateColumns}
-            dataSource={[]}
-            rowKey="id"
-            pagination={false}
-          />
-        ) : (
-          <Empty description="暂无候选人" />
+          ))
         )}
-      </Card>
+      </div>
 
-      {/* 匹配结果 */}
-      {results && results.length > 0 && (
-        <Card title="匹配结果">
-          <Table
-            columns={resultColumns}
-            dataSource={results}
-            rowKey="candidateId"
-            pagination={false}
-          />
-        </Card>
-      )}
-
-      {/* 上传候选人弹窗 */}
-      <Modal
-        title="上传候选人简历"
-        open={uploadModalVisible}
-        onCancel={() => {
-          setUploadModalVisible(false);
-          setFileList([]);
-        }}
-        onOk={handleUpload}
-        confirmLoading={uploadMutation.isPending}
-        okText="上传"
-        cancelText="取消"
-        width={600}
-      >
-        {uploadMutation.isPending ? (
-          <div className="py-8">
-            <Progress percent={100} status="active" />
-            <Text className="mt-4 block text-center">正在上传，请稍候...</Text>
-          </div>
-        ) : (
-          <Dragger {...uploadProps}>
-            <p className="ant-upload-drag-icon">
-              <InboxOutlined />
-            </p>
-            <p className="ant-upload-text">点击或拖拽文件到此区域上传</p>
-            <p className="ant-upload-hint">
-              支持 PDF、Word、文本文件
-            </p>
-          </Dragger>
-        )}
+      <Modal title="上传候选人简历" open={open} onCancel={() => setOpen(false)} onOk={submitUpload} confirmLoading={upload.isPending} okText="上传">
+        <Upload.Dragger
+          maxCount={1}
+          fileList={fileList}
+          beforeUpload={() => false}
+          onChange={({ fileList: next }) => setFileList(next.slice(-1))}
+          accept=".pdf,.doc,.docx,.txt,.md"
+        >
+          <p className="ant-upload-drag-icon"><InboxOutlined /></p>
+          <p>拖拽候选人简历到这里</p>
+        </Upload.Dragger>
       </Modal>
     </div>
   );

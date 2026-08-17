@@ -1,236 +1,114 @@
-import { useParams, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { Card, Typography, Input, Button, Space, Tag, Divider, Modal } from 'antd';
-import {
-  ArrowLeftOutlined,
-  SendOutlined,
-  CheckCircleOutlined,
-  PauseCircleOutlined,
-  PlayCircleOutlined,
-} from '@ant-design/icons';
-import { useInterview, useSubmitAnswer, useFinishInterview, usePauseInterview, useResumeInterview } from '@/features/interview/interview.hooks';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Button, Input, Modal, message } from 'antd';
+import { useFinishInterview, useInterview, useSubmitAnswer } from '@/features/interview/interview.hooks';
 import { Loading, Empty, Error as ErrorDisplay } from '@/components/ui';
-
-const { Title, Text, Paragraph } = Typography;
-const { TextArea } = Input;
+import { PRESSURE_LEVELS } from '@/lib/interview-options';
 
 export const InterviewChatPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { data: interview, isLoading, error, refetch } = useInterview(id || '');
-  const submitAnswerMutation = useSubmitAnswer();
-  const finishMutation = useFinishInterview();
-  const pauseMutation = usePauseInterview();
-  const resumeMutation = useResumeInterview();
+  const submit = useSubmitAnswer();
+  const finish = useFinishInterview();
   const [answer, setAnswer] = useState('');
-  const [finishModalVisible, setFinishModalVisible] = useState(false);
+  const latest = interview?.diagnoses?.at(-1);
 
-  const handleSubmitAnswer = () => {
-    if (!answer.trim() || !id) return;
+  if (isLoading) return <Loading fullScreen text="加载面试..." />;
+  if (error) return <ErrorDisplay variant="result" severity="error" message="加载失败" description={error.message} onRetry={refetch} />;
+  if (!interview) return <Empty description="面试不存在" />;
 
-    submitAnswerMutation.mutate(
-      { id, data: { answer: answer.trim() } },
-      {
-        onSuccess: () => {
-          setAnswer('');
-        },
-      }
-    );
-  };
+  const done = interview.status === 'finished' || Boolean(interview.result);
+  const pressure = PRESSURE_LEVELS.find((item) => item.level === interview.pressure);
 
-  const handleFinish = () => {
-    if (!id) return;
-    finishMutation.mutate(id, {
-      onSuccess: () => {
-        setFinishModalVisible(false);
-        navigate('/interview');
+  const onSubmit = () => {
+    if (!id || !answer.trim()) return;
+    submit.mutate({ id, answer: answer.trim() }, {
+      onSuccess: (result) => {
+        setAnswer('');
+        if (result.needsHumanReview) message.info('本轮进入人工复核，可继续作答或结束出报告');
+        if (result.shouldFinish) {
+          finish.mutate(id, { onSuccess: () => navigate(`/interview/${id}/report`) });
+        }
       },
     });
   };
 
-  const handlePause = () => {
-    if (!id) return;
-    pauseMutation.mutate(id);
-  };
-
-  const handleResume = () => {
-    if (!id) return;
-    resumeMutation.mutate(id);
-  };
-
-  if (isLoading) {
-    return <Loading fullScreen text="加载面试..." />;
-  }
-
-  if (error) {
-    return (
-      <div className="p-6">
-        <ErrorDisplay
-          variant="result"
-          severity="error"
-          message="加载失败"
-          description={error.message}
-          onRetry={refetch}
-        />
-      </div>
-    );
-  }
-
-  if (!interview) {
-    return <Empty description="面试不存在" />;
-  }
-
-  const transcript = interview.transcript || [];
-  const isActive = interview.status === 'active';
-  const isPaused = interview.status === 'paused';
-
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      {/* 返回按钮 */}
-      <Button
-        icon={<ArrowLeftOutlined />}
-        onClick={() => navigate('/interview')}
-        className="mb-4"
-      >
-        返回列表
-      </Button>
-
-      {/* 面试信息 */}
-      <Card className="mb-6">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <Title level={3} className="mb-2">
-              面试进行中
-            </Title>
-            <Space>
-              <Tag color={
-                interview.status === 'active' ? 'processing' :
-                interview.status === 'paused' ? 'warning' :
-                interview.status === 'completed' ? 'success' : 'default'
-              }>
-                {interview.status === 'active' ? '进行中' :
-                 interview.status === 'paused' ? '已暂停' :
-                 interview.status === 'completed' ? '已完成' : '已放弃'}
-              </Tag>
-              {interview.currentQuestionIndex && interview.totalQuestions && (
-                <Text type="secondary">
-                  问题 {interview.currentQuestionIndex} / {interview.totalQuestions}
-                </Text>
-              )}
-            </Space>
+    <div>
+      <div className="op-card" style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'center' }}>
+        <div>
+          <div className="op-kicker">{interview.phase || '面试进行中'}</div>
+          <div style={{ fontWeight: 800, fontSize: 18 }}>{interview.targetRole}</div>
+          <div style={{ display: 'flex', gap: 8, marginTop: 8, flexWrap: 'wrap' }}>
+            <span className="op-chip stable">第 {interview.progress || 0} 轮</span>
+            {interview.mappedSkill && <span className="op-chip">{interview.mappedSkill}</span>}
+            <span className={`op-chip ${pressure?.tag.includes('冲') ? 'reach' : 'stable'}`}>L{interview.pressure} {pressure?.label}</span>
           </div>
-          <Space>
-            {isActive && (
-              <>
-                <Button icon={<PauseCircleOutlined />} onClick={handlePause}>
-                  暂停
-                </Button>
-                <Button
-                  type="primary"
-                  icon={<CheckCircleOutlined />}
-                  onClick={() => setFinishModalVisible(true)}
-                >
-                  完成面试
-                </Button>
-              </>
-            )}
-            {isPaused && (
-              <Button
-                type="primary"
-                icon={<PlayCircleOutlined />}
-                onClick={handleResume}
-              >
-                继续面试
-              </Button>
-            )}
-          </Space>
         </div>
-      </Card>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <Button onClick={() => navigate('/interview')}>返回</Button>
+          {!done && (
+            <Button type="primary" onClick={() => Modal.confirm({
+              title: '完成面试并生成报告？',
+              onOk: () => finish.mutate(id!, { onSuccess: () => navigate(`/interview/${id}/report`) }),
+            })}>结束并出报告</Button>
+          )}
+        </div>
+      </div>
 
-      {/* 对话历史 */}
-      <Card className="mb-6" title="对话记录">
-        {transcript.length === 0 ? (
-          <Empty description="暂无对话记录" />
-        ) : (
-          <div className="space-y-4">
-            {transcript.map((turn, index) => (
-              <div key={index}>
-                {/* 问题 */}
-                <div className="bg-blue-50 p-4 rounded-lg mb-3">
-                  <div className="flex items-start gap-2">
-                    <Tag color="blue">面试官</Tag>
-                    <Paragraph className="mb-0 flex-1">
-                      {turn.question}
-                    </Paragraph>
-                  </div>
-                </div>
-
-                {/* 回答 */}
-                {turn.answer && (
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <div className="flex items-start gap-2">
-                      <Tag color="green">候选人</Tag>
-                      <Paragraph className="mb-0 flex-1">
-                        {turn.answer}
-                      </Paragraph>
-                    </div>
-                  </div>
-                )}
-
-                {index < transcript.length - 1 && <Divider />}
+      <div className="op-grid op-grid-2" style={{ marginBottom: 16, alignItems: 'start' }}>
+        <div className="op-card" style={{ minHeight: 360 }}>
+          {(interview.transcript || []).length === 0 && <p className="op-sub">等待第一题...</p>}
+          {(interview.transcript || []).map((turn, index) => (
+            <div key={`${turn.role}-${index}`} className={`op-row ${turn.role === 'candidate' ? 'right' : ''}`}>
+              <div className={`op-bubble ${turn.role}`}>
+                <div style={{ fontSize: 11, opacity: 0.7, marginBottom: 6 }}>{turn.role === 'interviewer' ? '面试官' : '你'}</div>
+                {turn.text}
+                {typeof turn.score === 'number' && <div style={{ marginTop: 8, fontSize: 12 }}>本轮 {turn.score} 分</div>}
               </div>
-            ))}
-          </div>
-        )}
-      </Card>
+            </div>
+          ))}
+        </div>
+        <div className="op-card">
+          <span className="op-chip warn">本轮诊断</span>
+          {latest ? (
+            <div style={{ marginTop: 12 }}>
+              <div style={{ fontWeight: 700, marginBottom: 6 }}>{latest.mappedSkill || latest.topic}</div>
+              <div className="op-sub">得分 {latest.score} · {latest.action}</div>
+              {latest.strongPoint && <p style={{ marginTop: 10 }}><span className="op-chip safe">证据</span> {latest.strongPoint}</p>}
+              {latest.weakPoint && <p style={{ marginTop: 10 }}><span className="op-chip reach">缺口</span> {latest.weakPoint}</p>}
+              <div style={{ marginTop: 12 }}>
+                {(latest.missingEvidence || []).map((item) => <span key={item} className="op-chip" style={{ margin: '0 6px 6px 0' }}>{item}</span>)}
+              </div>
+            </div>
+          ) : (
+            <p className="op-sub" style={{ marginTop: 12 }}>提交第一轮回答后，这里会显示缺失证据和能力映射。</p>
+          )}
+        </div>
+      </div>
 
-      {/* 输入区域 */}
-      {(isActive || isPaused) && (
-        <Card>
-          <div className="mb-3">
-            <Text strong>当前问题：</Text>
-            <Paragraph className="mt-2 bg-blue-50 p-3 rounded">
-              {interview.currentQuestion || '等待下一个问题...'}
-            </Paragraph>
+      {!done && (
+        <div className="op-composer">
+          {interview.question && (
+            <div style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 8 }}>当前问题：{interview.question}</div>
+          )}
+          <Input.TextArea
+            value={answer}
+            onChange={(e) => setAnswer(e.target.value)}
+            placeholder="用具体职责、机制、指标和边界来回答。不要只堆名词。"
+            autoSize={{ minRows: 3, maxRows: 8 }}
+            onPressEnter={(e) => {
+              if (e.shiftKey) return;
+              e.preventDefault();
+              onSubmit();
+            }}
+          />
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 10 }}>
+            <Button type="primary" loading={submit.isPending} disabled={!answer.trim()} onClick={onSubmit}>提交回答</Button>
           </div>
-
-          <div className="mb-3">
-            <TextArea
-              value={answer}
-              onChange={(e) => setAnswer(e.target.value)}
-              placeholder="请输入你的回答..."
-              autoSize={{ minRows: 4, maxRows: 8 }}
-              disabled={!isActive}
-            />
-          </div>
-
-          <div className="flex justify-end">
-            <Button
-              type="primary"
-              icon={<SendOutlined />}
-              onClick={handleSubmitAnswer}
-              loading={submitAnswerMutation.isPending}
-              disabled={!isActive || !answer.trim()}
-              size="large"
-            >
-              提交回答
-            </Button>
-          </div>
-        </Card>
+        </div>
       )}
-
-      {/* 完成面试确认弹窗 */}
-      <Modal
-        title="完成面试"
-        open={finishModalVisible}
-        onCancel={() => setFinishModalVisible(false)}
-        onOk={handleFinish}
-        confirmLoading={finishMutation.isPending}
-        okText="完成"
-        cancelText="取消"
-      >
-        <p>确定要完成这场面试吗？完成后将生成面试报告。</p>
-      </Modal>
     </div>
   );
 };
