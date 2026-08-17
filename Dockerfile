@@ -3,6 +3,7 @@ ARG NODE_IMAGE=node:22-alpine
 FROM ${NODE_IMAGE} AS builder
 
 ARG ALPINE_MIRROR=""
+ARG NPM_REGISTRY=""
 
 WORKDIR /app
 
@@ -15,8 +16,9 @@ RUN if [ -n "$ALPINE_MIRROR" ]; then \
 # 复制 package.json
 COPY package*.json ./
 
-# 安装依赖
-RUN npm ci
+# 安装依赖；云端可切换到区域 npm 镜像，避免跨境下载超时。
+RUN if [ -n "$NPM_REGISTRY" ]; then npm config set registry "$NPM_REGISTRY"; fi \
+    && npm ci
 
 # 复制源代码
 COPY . .

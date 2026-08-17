@@ -6,6 +6,7 @@ services:
       args:
         NODE_IMAGE: mirror.ccs.tencentyun.com/library/node:22-alpine
         ALPINE_MIRROR: https://mirrors.cloud.tencent.com/alpine
+        NPM_REGISTRY: https://registry.npmmirror.com/
     image: offerpilot:latest
     restart: unless-stopped
     env_file:
