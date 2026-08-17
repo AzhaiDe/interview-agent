@@ -1,0 +1,10 @@
+node_modules
+dist
+dist-ssr
+*.electro
+.vscode
+.idea
+.DS_Store
+*.local
+*.log
+coverage

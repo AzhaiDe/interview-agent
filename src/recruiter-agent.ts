@@ -1,7 +1,8 @@
 import { z } from "zod";
 import { modelGateway } from "./model-gateway.js";
 import { enqueueMemory, omniMemory } from "./omnimemory.js";
-import { opaqueDeviceNo, redactSensitive } from "./pii.js";
+import { redactSensitive } from "./pii.js";
+import { database } from "./database.js";
 import { promptRegistry } from "./prompt-registry.js";
 import { analyzeJob, analyzeResumeForJob, rankMatches } from "./recruiter.js";
 import type { JobProfile, RecruiterResume, ResumeForensics } from "./types.js";
@@ -24,7 +25,7 @@ const rankingSchema = z.object({ ranking: z.array(z.object({ candidateId: z.stri
 function unique(items: string[]) { return [...new Set(items.filter(Boolean))]; }
 
 async function recruiterMemory(ownerId: string, groupId: string, query: string) {
-  const deviceNo = opaqueDeviceNo("organization", ownerId);
+  const deviceNo = database.memoryDeviceNo(ownerId);
   try { return { deviceNo, items: await omniMemory.search({ deviceNo, groupId, query, topK: 4 }) }; }
   catch { return { deviceNo, items: [] }; }
 }

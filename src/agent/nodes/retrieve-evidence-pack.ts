@@ -9,7 +9,7 @@ import path from "node:path";
 import type { InterviewGraphState, GraphNodeResult } from "../graph-state.js";
 import { retrieveEvidencePack } from "../../knowledge-service.js";
 import { omniMemory } from "../../omnimemory.js";
-import { opaqueDeviceNo } from "../../pii.js";
+import { database } from "../../database.js";
 import { recordDegradation, cacheVerifiedFacts, getCachedVerifiedFacts, hasCachedFacts } from "../fallbacks.js";
 
 type KbRow = { id: string; entity_type: string; role_ids: string[]; status?: string; judge_status?: string; source_ids: string[]; content: Record<string, any>; tags?: string[] };
@@ -79,7 +79,7 @@ export async function retrieveEvidencePackNode(state: InterviewGraphState): Prom
       const groupId = `candidate:${state.ownerId}:interview:${state.session.id}`;
       const memories = await omniMemory.search({
         query: state.questionPlan?.retrievalQuery || `${state.candidate.targetRole} ${skill} ${strategy}`,
-        deviceNo: opaqueDeviceNo("candidate", state.ownerId),
+        deviceNo: database.memoryDeviceNo(state.ownerId),
         groupId,
         topK: 6,
       });

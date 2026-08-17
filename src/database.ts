@@ -21,12 +21,12 @@ type TaskRecord = {
   updatedAt: string;
 };
 
-function now() { return new Date().toISOString(); }
+export function now() { return new Date().toISOString(); }
 function json(value: unknown) { return JSON.stringify(value); }
 function parse<T>(value: unknown): T { return JSON.parse(String(value)) as T; }
 
 export class AppDatabase {
-  private db: BetterSqlite3.Database;
+  readonly db: BetterSqlite3.Database;
 
   constructor(filename = config.databasePath) {
     fs.mkdirSync(path.dirname(filename), { recursive: true, mode: 0o700 });
@@ -38,7 +38,8 @@ export class AppDatabase {
   private migrate() {
     this.db.exec(`
       CREATE TABLE IF NOT EXISTS users (
-        id TEXT PRIMARY KEY, display_name TEXT NOT NULL, created_at TEXT NOT NULL
+        id TEXT PRIMARY KEY, display_name TEXT NOT NULL, created_at TEXT NOT NULL,
+        memory_device_no TEXT
       );
       CREATE TABLE IF NOT EXISTS resumes (
         id TEXT PRIMARY KEY, owner_id TEXT NOT NULL, file_name TEXT NOT NULL,
@@ -171,31 +172,67 @@ export class AppDatabase {
       CREATE INDEX IF NOT EXISTS idx_outbox_status ON memory_outbox(status, created_at);
       CREATE INDEX IF NOT EXISTS idx_uploaded_resource ON uploaded_files(owner_id, purpose, resource_id);
     `);
+    this.migrateUsers();
+  }
+
+  private migrateUsers() {
+    // Seed local user
     this.db.prepare("INSERT OR IGNORE INTO users(id, display_name, created_at) VALUES(?,?,?)")
       .run(config.localUserId, "本地用户", now());
     this.db.prepare("INSERT OR IGNORE INTO organizations(id,name,created_at) VALUES(?,?,?)").run("local-org", "本地组织", now());
     this.db.prepare("INSERT OR IGNORE INTO organization_members(organization_id,user_id,role,created_at) VALUES(?,?,?,?)").run("local-org", config.localUserId, "owner", now());
-    this.addColumn("resumes", "deleted_at", "TEXT");
-    this.addColumn("interview_sessions", "deleted_at", "TEXT");
-    this.addColumn("jobs", "deleted_at", "TEXT");
-    this.addColumn("uploaded_files", "deleted_at", "TEXT");
-    this.addColumn("uploaded_files", "expires_at", "TEXT");
-    this.addColumn("jobs", "organization_id", "TEXT NOT NULL DEFAULT 'local-org'");
-    this.addColumn("recruiter_resumes", "organization_id", "TEXT NOT NULL DEFAULT 'local-org'");
-    this.addColumn("recruiter_matches", "organization_id", "TEXT NOT NULL DEFAULT 'local-org'");
-    this.addColumn("model_runs", "trace_id", "TEXT");
-    this.addColumn("model_runs", "request_id", "TEXT");
-    this.addColumn("model_runs", "input_tokens", "INTEGER NOT NULL DEFAULT 0");
-    this.addColumn("model_runs", "output_tokens", "INTEGER NOT NULL DEFAULT 0");
-    this.addColumn("model_runs", "fallback_used", "INTEGER NOT NULL DEFAULT 0");
-    this.addColumn("model_runs", "error_code", "TEXT");
-    this.addColumn("interview_sessions", "graph_state_json", "TEXT");
-    this.addColumn("graph_checkpoints", "graph_state_json", "TEXT");
+
+    // Schema migrations — all wrapped individually for resilience
+    const migrations = [
+      () => this.addColumn("resumes", "deleted_at", "TEXT"),
+      () => this.addColumn("interview_sessions", "deleted_at", "TEXT"),
+      () => this.addColumn("jobs", "deleted_at", "TEXT"),
+      () => this.addColumn("uploaded_files", "deleted_at", "TEXT"),
+      () => this.addColumn("uploaded_files", "expires_at", "TEXT"),
+      () => this.addColumn("jobs", "organization_id", "TEXT NOT NULL DEFAULT 'local-org'"),
+      () => this.addColumn("recruiter_resumes", "organization_id", "TEXT NOT NULL DEFAULT 'local-org'"),
+      () => this.addColumn("recruiter_matches", "organization_id", "TEXT NOT NULL DEFAULT 'local-org'"),
+      () => this.addColumn("model_runs", "trace_id", "TEXT"),
+      () => this.addColumn("model_runs", "request_id", "TEXT"),
+      () => this.addColumn("model_runs", "input_tokens", "INTEGER NOT NULL DEFAULT 0"),
+      () => this.addColumn("model_runs", "output_tokens", "INTEGER NOT NULL DEFAULT 0"),
+      () => this.addColumn("model_runs", "fallback_used", "INTEGER NOT NULL DEFAULT 0"),
+      () => this.addColumn("model_runs", "error_code", "TEXT"),
+      () => this.addColumn("interview_sessions", "graph_state_json", "TEXT"),
+      () => this.addColumn("graph_checkpoints", "graph_state_json", "TEXT"),
+      // Auth migration: add password-based login support to users table
+      // Note: SQLite cannot ADD COLUMN with UNIQUE constraint on non-empty tables.
+      // We use TEXT without UNIQUE (uniqueness enforced at query layer).
+      () => this.addColumn("users", "email", "TEXT"),
+      () => this.addColumn("users", "password_hash", "TEXT NOT NULL DEFAULT ''"),
+      () => this.addColumn("users", "is_active", "INTEGER NOT NULL DEFAULT 1"),
+      () => this.addColumn("users", "memory_device_no", "TEXT"),
+      () => {
+        // Create unique index if the column exists and index does not yet exist
+        try { this.db.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email ON users(email)"); } catch { /* skip */ }
+      },
+      () => {
+        try { this.db.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_users_memory_device_no ON users(memory_device_no) WHERE memory_device_no IS NOT NULL"); } catch { /* skip */ }
+      },
+    ];
+    for (const m of migrations) {
+      try { m(); } catch (_err) { /* schema may differ across deployments — skip */ }
+    }
+    const usersWithoutDevice = this.db.prepare("SELECT id FROM users WHERE memory_device_no IS NULL OR memory_device_no='' ").all() as { id: string }[];
+    const assignDevice = this.db.prepare("UPDATE users SET memory_device_no=? WHERE id=? AND (memory_device_no IS NULL OR memory_device_no='')");
+    for (const user of usersWithoutDevice) assignDevice.run(`user-device-${crypto.randomUUID()}`, user.id);
+    // Pending local events may have been queued by an older build. Rebind
+    // them before submission so one user never emits under two device IDs.
+    this.db.exec("UPDATE memory_outbox SET device_no=(SELECT memory_device_no FROM users WHERE users.id=memory_outbox.owner_id) WHERE owner_id IN (SELECT id FROM users) AND status IN ('pending','retry')");
   }
 
   private addColumn(table: string, column: string, definition: string) {
-    const columns = this.db.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[];
-    if (!columns.some((item) => item.name === column)) this.db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
+    try {
+      const columns = this.db.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[];
+      if (!columns.some((item) => item.name === column)) this.db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
+    } catch (_err) {
+      // Column may already exist or schema incompatible — skip silently
+    }
   }
 
   saveResume(id: string, ownerId: string, fileName: string, rawText: string, profile: ResumeProfile) {
@@ -205,10 +242,16 @@ export class AppDatabase {
     const analysisId = crypto.randomUUID();
     this.db.prepare("INSERT INTO resume_analysis_versions(id,resume_id,version_no,prompt_version,mode,analysis_json,created_at) VALUES(?,?,?,?,?,?,?)")
       .run(analysisId, id, versionNo, profile.analysisVersion || "deterministic-v1", profile.analysisMode || "fallback", json(profile), now());
-    const insertExperience = this.db.prepare("INSERT INTO resume_experiences(id,analysis_id,experience_index,experience_json) VALUES(?,?,?,?)");
-    profile.experiences.forEach((experience, index) => insertExperience.run(experience.id || `${analysisId}:exp:${index}`, analysisId, index, json(experience)));
-    const insertClaim = this.db.prepare("INSERT INTO resume_evidence_claims(id,analysis_id,experience_id,claim,status,confidence,evidence_json) VALUES(?,?,?,?,?,?,?)");
-    (profile.evidenceClaims || []).forEach((claim) => insertClaim.run(claim.id, analysisId, claim.experienceId || null, claim.claim, claim.status, claim.confidence, json(claim.evidence)));
+    const upsertExperience = this.db.prepare(
+      "INSERT INTO resume_experiences(id,analysis_id,experience_index,experience_json) VALUES(?,?,?,?) " +
+      "ON CONFLICT(id) DO UPDATE SET analysis_id=excluded.analysis_id, experience_index=excluded.experience_index, experience_json=excluded.experience_json"
+    );
+    profile.experiences.forEach((experience, index) => upsertExperience.run(experience.id || `${analysisId}:exp:${index}`, analysisId, index, json(experience)));
+    const upsertClaim = this.db.prepare(
+      "INSERT INTO resume_evidence_claims(id,analysis_id,experience_id,claim,status,confidence,evidence_json) VALUES(?,?,?,?,?,?,?) " +
+      "ON CONFLICT(id) DO UPDATE SET analysis_id=excluded.analysis_id, experience_id=excluded.experience_id, claim=excluded.claim, status=excluded.status, confidence=excluded.confidence, evidence_json=excluded.evidence_json"
+    );
+    (profile.evidenceClaims || []).forEach((claim) => upsertClaim.run(claim.id, analysisId, claim.experienceId || null, claim.claim, claim.status, claim.confidence, json(claim.evidence)));
   }
 
   getResume(id: string, ownerId: string): { id: string; fileName: string; rawText: string; profile: ResumeProfile; createdAt: string } | undefined {
@@ -243,6 +286,17 @@ export class AppDatabase {
   ensureOwner(ownerId: string) {
     this.db.prepare("INSERT OR IGNORE INTO users(id, display_name, created_at) VALUES(?,?,?)").run(ownerId, ownerId, now());
     this.db.prepare("INSERT OR IGNORE INTO organization_members(organization_id,user_id,role,created_at) VALUES(?,?,?,?)").run("local-org", ownerId, "member", now());
+  }
+
+  /** Stable opaque OmniMemory identity assigned once per application user. */
+  memoryDeviceNo(userId: string): string {
+    const row = this.db.prepare("SELECT memory_device_no FROM users WHERE id=?").get(userId) as { memory_device_no?: string } | undefined;
+    if (row?.memory_device_no) return row.memory_device_no;
+    this.ensureOwner(userId);
+    const generated = `user-device-${crypto.randomUUID()}`;
+    this.db.prepare("UPDATE users SET memory_device_no=? WHERE id=? AND (memory_device_no IS NULL OR memory_device_no='')").run(generated, userId);
+    const assigned = this.db.prepare("SELECT memory_device_no FROM users WHERE id=?").get(userId) as { memory_device_no?: string } | undefined;
+    return assigned?.memory_device_no || generated;
   }
 
   saveGraphCheckpoint(ownerId: string, session: InterviewSession, graphState?: unknown) {

@@ -1,0 +1,46 @@
+{
+  "common": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "loading": "Loading...",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "confirm": "Confirm",
+    "error": "Error",
+    "success": "Success"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "username": "Username",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "loginSuccess": "Login successful",
+    "registerSuccess": "Registration successful"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "resume": "Resume",
+    "interview": "Interview",
+    "growth": "Growth",
+    "recruiter": "Recruiter"
+  },
+  "resume": {
+    "upload": "Upload Resume",
+    "analyze": "Analyze Resume",
+    "dragDrop": "Drag and drop file here, or click to upload",
+    "supportedFormats": "Supports PDF, DOCX, TXT formats"
+  },
+  "interview": {
+    "start": "Start Interview",
+    "setup": "Interview Setup",
+    "chat": "Interview Chat",
+    "report": "Interview Report",
+    "submitAnswer": "Submit Answer",
+    "placeholder": "Enter your answer..."
+  }
+}

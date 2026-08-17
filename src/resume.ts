@@ -127,48 +127,27 @@ function roleRecommendations(experiences: Experience[], fullText: string) {
 }
 
 class ResumeFileError extends Error { statusCode = 400; }
-class ResumeTimeoutError extends Error { statusCode = 504; }
-
-/**
- * Timeout wrapper for async operations.
- */
-function withTimeout<T>(promise: Promise<T>, timeoutMs: number, operation: string): Promise<T> {
-  return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => {
-      reject(new ResumeTimeoutError(`${operation} 超时（${timeoutMs}ms），请稍后重试或上传文本型 PDF`));
-    }, timeoutMs);
-
-    promise.then(
-      (result) => { clearTimeout(timer); resolve(result); },
-      (error) => { clearTimeout(timer); reject(error); }
-    );
-  });
-}
 
 async function ocrPdf(buffer: Buffer): Promise<string> {
   if (!config.ocr.enabled) throw new ResumeFileError("PDF 没有可提取文本；请启用 OCR 或上传文本型 PDF/DOCX");
-
-  // Add timeout for OCR (5 minutes total)
-  return withTimeout((async () => {
-    const document = await renderPdf(buffer, { scale: 2 });
-    if (document.length > config.ocr.maxPages) { document.destroy(); throw new ResumeFileError(`扫描 PDF 最多支持 ${config.ocr.maxPages} 页`); }
-    const worker = await createWorker(config.ocr.languages);
-    const pages: string[] = [];
-    try {
-      let count = 0;
-      for await (const image of document) {
-        if (++count > config.ocr.maxPages) break;
-        const result = await worker.recognize(image);
-        pages.push(result.data.text.trim());
-      }
-    } finally {
-      await worker.terminate();
-      document.destroy();
+  const document = await renderPdf(buffer, { scale: 2 });
+  if (document.length > config.ocr.maxPages) { document.destroy(); throw new ResumeFileError(`扫描 PDF 最多支持 ${config.ocr.maxPages} 页`); }
+  const worker = await createWorker(config.ocr.languages);
+  const pages: string[] = [];
+  try {
+    let count = 0;
+    for await (const image of document) {
+      if (++count > config.ocr.maxPages) break;
+      const result = await worker.recognize(image);
+      pages.push(result.data.text.trim());
     }
-    const text = pages.filter(Boolean).join("\n");
-    if (text.length < 20) throw new ResumeFileError("OCR 未识别到足够的简历文本");
-    return text;
-  })(), 300_000, "OCR 识别");
+  } finally {
+    await worker.terminate();
+    document.destroy();
+  }
+  const text = pages.filter(Boolean).join("\n");
+  if (text.length < 20) throw new ResumeFileError("OCR 未识别到足够的简历文本");
+  return text;
 }
 
 export async function inspectResumeFile(filename: string, buffer: Buffer): Promise<{ kind: "pdf" | "docx" | "text"; mime: string }> {
@@ -190,8 +169,7 @@ export async function inspectResumeFile(filename: string, buffer: Buffer): Promi
 export async function extractText(filename: string, buffer: Buffer): Promise<string> {
   const inspected = await inspectResumeFile(filename, buffer);
   if (inspected.kind === "pdf") {
-    // Add timeout for PDF parsing (30 seconds)
-    const result = await withTimeout(pdf(buffer), 30_000, "PDF 解析");
+    const result = await pdf(buffer);
     const text = result.text.trim();
     return text.length >= 20 ? text : ocrPdf(buffer);
   }

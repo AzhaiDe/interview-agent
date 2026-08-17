@@ -37,6 +37,20 @@ test("SQLite repository persists interview state across instances", () => {
   fs.rmSync(directory, { recursive: true, force: true });
 });
 
+test("each user receives one stable opaque OmniMemory device number", () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), "offerpilot-device-test-"));
+  const db = new AppDatabase(path.join(directory, "test.sqlite"));
+  const first = db.memoryDeviceNo("user-alice");
+  assert.match(first, /^user-device-[0-9a-f-]+$/);
+  assert.equal(db.memoryDeviceNo("user-alice"), first);
+  assert.notEqual(db.memoryDeviceNo("user-bob"), first);
+  db.close();
+  const reopened = new AppDatabase(path.join(directory, "test.sqlite"));
+  assert.equal(reopened.memoryDeviceNo("user-alice"), first);
+  reopened.close();
+  fs.rmSync(directory, { recursive: true, force: true });
+});
+
 test("SQLite stores downloadable resume attachment metadata", () => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "offerpilot-file-test-"));
   const db = new AppDatabase(path.join(directory, "test.sqlite"));

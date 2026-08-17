@@ -1,0 +1,246 @@
+[silver] env MODEL_ENABLED= false config.model.enabled= false apiKey= present
+[silver] Track 1: Resume - 21 cases
+  [silver] resume resume-001: fallback mode, 3 skills
+  [silver] resume resume-002: fallback mode, 3 skills
+  [silver] resume resume-003: fallback mode, 3 skills
+  [silver] resume resume-004: fallback mode, 2 skills
+  [silver] resume resume-005: fallback mode, 1 skills
+  [silver] resume resume-006: fallback mode, 1 skills
+  [silver] resume resume-gen-001: fallback mode, 1 skills
+  [silver] resume resume-gen-002: fallback mode, 1 skills
+  [silver] resume resume-gen-003: fallback mode, 0 skills
+  [silver] resume resume-gen-004: fallback mode, 0 skills
+  [silver] resume resume-gen-005: fallback mode, 0 skills
+  [silver] resume resume-gen-006: fallback mode, 2 skills
+  [silver] resume resume-gen-007: fallback mode, 1 skills
+  [silver] resume resume-gen-008: fallback mode, 0 skills
+  [silver] resume resume-gen-009: fallback mode, 1 skills
+  [silver] resume resume-gen-010: fallback mode, 1 skills
+  [silver] resume resume-gen-011: fallback mode, 2 skills
+  [silver] resume resume-gen-012: fallback mode, 1 skills
+  [silver] resume resume-gen-013: fallback mode, 2 skills
+  [silver] resume resume-gen-014: fallback mode, 0 skills
+  [silver] resume resume-gen-015: fallback mode, 0 skills
+[silver] Track 2: Interview - 202 cases
+  [silver] interview turn-001: score=2, action=clarify
+  [silver] interview turn-002: score=5.1, action=clarify
+  [silver] interview turn-003: score=2, action=clarify
+  [silver] interview turn-004: score=5.1, action=clarify
+  [silver] interview turn-005: score=1, action=clarify
+  [silver] interview turn-006: score=4.4, action=clarify
+  [silver] interview turn-007: score=1, action=clarify
+  [silver] interview turn-008: score=2, action=clarify
+  [silver] interview turn-009: score=4.4, action=clarify
+  [silver] interview turn-010: score=6, action=clarify
+  [silver] interview turn-gen-016: score=3, action=clarify
+  [silver] interview turn-gen-017: score=2, action=clarify
+  [silver] interview turn-gen-018: score=3.7, action=clarify
+  [silver] interview turn-gen-019: score=2, action=clarify
+  [silver] interview turn-gen-020: score=5.8, action=clarify
+  [silver] interview turn-gen-021: score=2.7, action=clarify
+  [silver] interview turn-gen-022: score=5.4, action=clarify
+  [silver] interview turn-gen-023: score=2, action=clarify
+  [silver] interview turn-gen-024: score=6.8, action=clarify
+  [silver] interview turn-gen-025: score=2, action=clarify
+  [silver] interview turn-gen-026: score=3, action=clarify
+  [silver] interview turn-gen-027: score=2, action=clarify
+  [silver] interview turn-gen-028: score=3.7, action=clarify
+  [silver] interview turn-gen-029: score=2, action=clarify
+  [silver] interview turn-gen-030: score=5.8, action=clarify
+  [silver] interview turn-gen-031: score=2.7, action=clarify
+  [silver] interview turn-gen-032: score=5.4, action=clarify
+  [silver] interview turn-gen-033: score=2, action=clarify
+  [silver] interview turn-gen-034: score=6.8, action=clarify
+  [silver] interview turn-gen-035: score=2, action=clarify
+  [silver] interview turn-gen-036: score=3, action=clarify
+  [silver] interview turn-gen-037: score=2, action=clarify
+  [silver] interview turn-gen-038: score=3.7, action=clarify
+  [silver] interview turn-gen-039: score=2, action=clarify
+  [silver] interview turn-gen-040: score=5.8, action=clarify
+  [silver] interview turn-gen-041: score=2.7, action=clarify
+  [silver] interview turn-gen-042: score=5.4, action=clarify
+  [silver] interview turn-gen-043: score=2, action=clarify
+  [silver] interview turn-gen-044: score=6.8, action=clarify
+  [silver] interview turn-gen-045: score=2, action=clarify
+  [silver] interview turn-gen-046: score=3, action=clarify
+  [silver] interview turn-gen-047: score=2, action=clarify
+  [silver] interview turn-gen-048: score=3.7, action=clarify
+  [silver] interview turn-gen-049: score=2, action=clarify
+  [silver] interview turn-gen-050: score=5.8, action=clarify
+  [silver] interview turn-gen-051: score=2.7, action=clarify
+  [silver] interview turn-gen-052: score=5.4, action=clarify
+  [silver] interview turn-gen-053: score=2, action=clarify
+  [silver] interview turn-gen-054: score=6.8, action=clarify
+  [silver] interview turn-gen-055: score=2, action=clarify
+  [silver] interview turn-gen-056: score=3, action=clarify
+  [silver] interview turn-gen-057: score=2, action=clarify
+  [silver] interview turn-gen-058: score=3.7, action=clarify
+  [silver] interview turn-gen-059: score=2, action=clarify
+  [silver] interview turn-gen-060: score=5.8, action=clarify
+  [silver] interview turn-gen-061: score=2.7, action=clarify
+  [silver] interview turn-gen-062: score=5.4, action=clarify
+  [silver] interview turn-gen-063: score=2, action=clarify
+  [silver] interview turn-gen-064: score=6.8, action=clarify
+  [silver] interview turn-gen-065: score=2, action=clarify
+  [silver] interview turn-gen-066: score=3, action=clarify
+  [silver] interview turn-gen-067: score=2, action=clarify
+  [silver] interview turn-gen-068: score=3.7, action=clarify
+  [silver] interview turn-gen-069: score=2, action=clarify
+  [silver] interview turn-gen-070: score=5.8, action=clarify
+  [silver] interview turn-gen-071: score=2.7, action=clarify
+  [silver] interview turn-gen-072: score=5.4, action=clarify
+  [silver] interview turn-gen-073: score=2, action=clarify
+  [silver] interview turn-gen-074: score=6.8, action=clarify
+  [silver] interview turn-gen-075: score=2, action=clarify
+  [silver] interview turn-gen-076: score=1, action=clarify
+  [silver] interview turn-gen-077: score=2, action=clarify
+  [silver] interview turn-gen-078: score=1, action=clarify
+  [silver] interview turn-gen-079: score=1, action=clarify
+  [silver] interview turn-gen-080: score=2, action=clarify
+  [silver] interview turn-gen-081: score=2, action=clarify
+  [silver] interview turn-gen-082: score=3.7, action=clarify
+  [silver] interview turn-gen-083: score=2, action=clarify
+  [silver] interview turn-gen-084: score=5.8, action=clarify
+  [silver] interview turn-gen-085: score=2.7, action=clarify
+  [silver] interview turn-gen-086: score=5.4, action=clarify
+  [silver] interview turn-gen-087: score=2, action=clarify
+  [silver] interview turn-gen-088: score=6.8, action=clarify
+  [silver] interview turn-gen-089: score=2, action=clarify
+  [silver] interview turn-gen-090: score=2, action=clarify
+  [silver] interview turn-gen-091: score=2, action=clarify
+  [silver] interview turn-gen-092: score=3.7, action=clarify
+  [silver] interview turn-gen-093: score=2, action=clarify
+  [silver] interview turn-gen-094: score=5.8, action=clarify
+  [silver] interview turn-gen-095: score=2.7, action=clarify
+  [silver] interview turn-gen-096: score=5.4, action=clarify
+  [silver] interview turn-gen-097: score=2, action=clarify
+  [silver] interview turn-gen-098: score=6.8, action=clarify
+  [silver] interview turn-gen-099: score=2, action=clarify
+  [silver] interview turn-gen-100: score=2, action=clarify
+  [silver] interview turn-gen-101: score=2, action=clarify
+  [silver] interview turn-gen-102: score=3.7, action=clarify
+  [silver] interview turn-gen-103: score=2, action=clarify
+  [silver] interview turn-gen-104: score=5.8, action=clarify
+  [silver] interview turn-gen-105: score=2.7, action=clarify
+  [silver] interview turn-gen-106: score=5.4, action=clarify
+  [silver] interview turn-gen-107: score=2, action=clarify
+  [silver] interview turn-gen-108: score=6.8, action=clarify
+  [silver] interview turn-gen-109: score=2, action=clarify
+  [silver] interview turn-gen-110: score=2, action=clarify
+  [silver] interview turn-gen-111: score=2, action=clarify
+  [silver] interview turn-gen-112: score=3.7, action=clarify
+  [silver] interview turn-gen-113: score=2, action=clarify
+  [silver] interview turn-gen-114: score=5.8, action=clarify
+  [silver] interview turn-gen-115: score=2.7, action=clarify
+  [silver] interview turn-gen-116: score=5.4, action=clarify
+  [silver] interview turn-gen-117: score=2, action=clarify
+  [silver] interview turn-gen-118: score=6.8, action=clarify
+  [silver] interview turn-gen-119: score=2, action=clarify
+  [silver] interview turn-gen-120: score=2, action=clarify
+  [silver] interview turn-gen-121: score=2, action=clarify
+  [silver] interview turn-gen-122: score=3.7, action=clarify
+  [silver] interview turn-gen-123: score=2, action=clarify
+  [silver] interview turn-gen-124: score=5.8, action=clarify
+  [silver] interview turn-gen-125: score=2.7, action=clarify
+  [silver] interview turn-gen-126: score=5.4, action=clarify
+  [silver] interview turn-gen-127: score=2, action=clarify
+  [silver] interview turn-gen-128: score=6.8, action=clarify
+  [silver] interview turn-gen-129: score=2, action=clarify
+  [silver] interview turn-gen-130: score=2, action=clarify
+  [silver] interview turn-gen-131: score=2, action=clarify
+  [silver] interview turn-gen-132: score=3.7, action=clarify
+  [silver] interview turn-gen-133: score=2, action=clarify
+  [silver] interview turn-gen-134: score=5.8, action=clarify
+  [silver] interview turn-gen-135: score=2.7, action=clarify
+  [silver] interview turn-gen-136: score=5.4, action=clarify
+  [silver] interview turn-gen-137: score=2, action=clarify
+  [silver] interview turn-gen-138: score=6.8, action=clarify
+  [silver] interview turn-gen-139: score=2, action=clarify
+  [silver] interview turn-gen-140: score=1, action=clarify
+  [silver] interview turn-gen-141: score=2, action=clarify
+  [silver] interview turn-gen-142: score=1, action=clarify
+  [silver] interview turn-gen-143: score=1, action=clarify
+  [silver] interview turn-gen-144: score=2, action=clarify
+  [silver] interview turn-gen-145: score=2, action=clarify
+  [silver] interview turn-gen-146: score=3.7, action=clarify
+  [silver] interview turn-gen-147: score=2, action=clarify
+  [silver] interview turn-gen-148: score=5.8, action=clarify
+  [silver] interview turn-gen-149: score=2.7, action=clarify
+  [silver] interview turn-gen-150: score=5.4, action=clarify
+  [silver] interview turn-gen-151: score=2, action=clarify
+  [silver] interview turn-gen-152: score=6.8, action=clarify
+  [silver] interview turn-gen-153: score=2, action=clarify
+  [silver] interview turn-gen-154: score=2, action=clarify
+  [silver] interview turn-gen-155: score=2, action=clarify
+  [silver] interview turn-gen-156: score=3.7, action=clarify
+  [silver] interview turn-gen-157: score=2, action=clarify
+  [silver] interview turn-gen-158: score=5.8, action=clarify
+  [silver] interview turn-gen-159: score=2.7, action=clarify
+  [silver] interview turn-gen-160: score=5.4, action=clarify
+  [silver] interview turn-gen-161: score=2, action=clarify
+  [silver] interview turn-gen-162: score=6.8, action=clarify
+  [silver] interview turn-gen-163: score=2, action=clarify
+  [silver] interview turn-gen-164: score=2, action=clarify
+  [silver] interview turn-gen-165: score=2, action=clarify
+  [silver] interview turn-gen-166: score=3.7, action=clarify
+  [silver] interview turn-gen-167: score=2, action=clarify
+  [silver] interview turn-gen-168: score=5.8, action=clarify
+  [silver] interview turn-gen-169: score=2.7, action=clarify
+  [silver] interview turn-gen-170: score=5.4, action=clarify
+  [silver] interview turn-gen-171: score=2, action=clarify
+  [silver] interview turn-gen-172: score=6.8, action=clarify
+  [silver] interview turn-gen-173: score=2, action=clarify
+  [silver] interview turn-gen-174: score=2, action=clarify
+  [silver] interview turn-gen-175: score=2, action=clarify
+  [silver] interview turn-gen-176: score=3.7, action=clarify
+  [silver] interview turn-gen-177: score=2, action=clarify
+  [silver] interview turn-gen-178: score=5.8, action=clarify
+  [silver] interview turn-gen-179: score=2.7, action=clarify
+  [silver] interview turn-gen-180: score=5.4, action=clarify
+  [silver] interview turn-gen-181: score=2, action=clarify
+  [silver] interview turn-gen-182: score=6.8, action=clarify
+  [silver] interview turn-gen-183: score=2, action=clarify
+  [silver] interview turn-gen-184: score=2, action=clarify
+  [silver] interview turn-gen-185: score=2, action=clarify
+  [silver] interview turn-gen-186: score=3.7, action=clarify
+  [silver] interview turn-gen-187: score=2, action=clarify
+  [silver] interview turn-gen-188: score=5.8, action=clarify
+  [silver] interview turn-gen-189: score=2.7, action=clarify
+  [silver] interview turn-gen-190: score=5.4, action=clarify
+  [silver] interview turn-gen-191: score=2, action=clarify
+  [silver] interview turn-gen-192: score=6.8, action=clarify
+  [silver] interview turn-gen-193: score=2, action=clarify
+  [silver] interview turn-gen-194: score=2, action=clarify
+  [silver] interview turn-gen-195: score=2, action=clarify
+  [silver] interview turn-gen-196: score=3.7, action=clarify
+  [silver] interview turn-gen-197: score=2, action=clarify
+  [silver] interview turn-gen-198: score=5.8, action=clarify
+  [silver] interview turn-gen-199: score=2.7, action=clarify
+  [silver] interview turn-gen-200: score=5.4, action=clarify
+  [silver] interview turn-gen-201: score=2, action=clarify
+  [silver] interview turn-gen-202: score=6.8, action=clarify
+  [silver] interview turn-gen-203: score=2, action=clarify
+  [silver] interview turn-gen-204: score=1, action=clarify
+  [silver] interview turn-gen-205: score=2, action=clarify
+  [silver] interview turn-gen-206: score=1, action=clarify
+  [silver] interview turn-gen-207: score=1, action=clarify
+[silver] Track 3: Ranking - 9 cases
+  [silver] ranking job job-backend-001: fallback mode
+  [silver] ranking job-backend-001: fallback mode, 5 candidates
+  [silver] ranking job job-ai-001: fallback mode
+  [silver] ranking job-ai-001: fallback mode, 5 candidates
+  [silver] ranking job job-frontend-001: fallback mode
+  [silver] ranking job-frontend-001: fallback mode, 5 candidates
+  [silver] ranking job job-gen-208: fallback mode
+  [silver] ranking job-gen-208: fallback mode, 4 candidates
+  [silver] ranking job job-gen-213: fallback mode
+  [silver] ranking job-gen-213: fallback mode, 5 candidates
+  [silver] ranking job job-gen-219: fallback mode
+  [silver] ranking job-gen-219: fallback mode, 4 candidates
+  [silver] ranking job job-gen-224: fallback mode
+  [silver] ranking job-gen-224: fallback mode, 5 candidates
+  [silver] ranking job job-gen-230: fallback mode
+  [silver] ranking job-gen-230: fallback mode, 4 candidates
+  [silver] ranking job job-gen-235: fallback mode
+  [silver] ranking job-gen-235: fallback mode, 5 candidates
+DONE

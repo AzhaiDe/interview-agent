@@ -31,13 +31,16 @@ function intEnv(name: string, fallback: number): number {
 export const config = {
   env: process.env.NODE_ENV || "development",
   port: intEnv("PORT", 4310),
-  host: process.env.HOST || "127.0.0.1",
+  host: process.env.HOST || "0.0.0.0",
   publicDemo: process.env.PUBLIC_DEMO === "true",
   dataDir: path.resolve(process.env.DATA_DIR || path.join(process.cwd(), "data-v2")),
   databasePath: path.resolve(process.env.DATABASE_PATH || path.join(process.cwd(), "data-v2", "offerpilot.sqlite")),
   uploadDir: path.resolve(process.env.UPLOAD_DIR || path.join(process.cwd(), "data-v2", "uploads")),
   ocr: { enabled: process.env.OCR_ENABLED !== "false", languages: process.env.OCR_LANGUAGES || "chi_sim+eng", maxPages: intEnv("OCR_MAX_PAGES", 8) },
   localUserId: process.env.LOCAL_USER_ID || "local-user",
+  requireAuth: process.env.REQUIRE_AUTH !== "false",
+  adminUserId: process.env.ADMIN_USER_ID || "admin",
+  adminUserPassword: process.env.ADMIN_USER_PASSWORD || "",
   workerConcurrency: Math.max(1, Math.min(8, intEnv("WORKER_CONCURRENCY", 3))),
   model: {
     get enabled() { return process.env.MODEL_ENABLED !== "false"; },

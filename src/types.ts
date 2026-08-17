@@ -1,3 +1,11 @@
+declare module "fastify" {
+  interface FastifyRequest {
+    userId: string;
+    displayName: string;
+    cookies: Record<string, string | undefined>;
+  }
+}
+
 export type Experience = {
   id?: string;
   title: string;

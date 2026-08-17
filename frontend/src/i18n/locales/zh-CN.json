@@ -1,0 +1,46 @@
+{
+  "common": {
+    "submit": "提交",
+    "cancel": "取消",
+    "loading": "加载中...",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "back": "返回",
+    "next": "下一步",
+    "confirm": "确认",
+    "error": "错误",
+    "success": "成功"
+  },
+  "auth": {
+    "login": "登录",
+    "register": "注册",
+    "logout": "退出登录",
+    "username": "用户名",
+    "password": "密码",
+    "confirmPassword": "确认密码",
+    "loginSuccess": "登录成功",
+    "registerSuccess": "注册成功"
+  },
+  "nav": {
+    "dashboard": "工作台",
+    "resume": "简历",
+    "interview": "面试",
+    "growth": "成长",
+    "recruiter": "招聘"
+  },
+  "resume": {
+    "upload": "上传简历",
+    "analyze": "分析简历",
+    "dragDrop": "拖拽文件到此处，或点击上传",
+    "supportedFormats": "支持 PDF、DOCX、TXT 格式"
+  },
+  "interview": {
+    "start": "开始面试",
+    "setup": "面试设置",
+    "chat": "面试对话",
+    "report": "面试报告",
+    "submitAnswer": "提交答案",
+    "placeholder": "请输入你的回答..."
+  }
+}

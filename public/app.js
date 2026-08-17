@@ -1,19 +1,57 @@
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
 const KEY = "offerpilot-state-v2";
 const CLIENT_STATE_VERSION = "adaptive-interview-v1";
+// Cloudflare Tunnel via HTTP → upstream expects HTTP/1.1 to avoid h2 downgrade issues.
 const rawFetch = window.fetch.bind(window);
+
+/** Default 5-minute timeout for all fetch calls (prevents hang on tunnel drop). */
+const FETCH_TIMEOUT_MS = 5 * 60 * 1000; // OfferPilot v2.1
+
 window.fetch = async (input, init = {}) => {
-  const accessCode = localStorage.getItem("offerpilot-public-access-code");
-  const isApi = String(input).startsWith("/api/");
-  const headers = new Headers(init.headers || {});
-  if (accessCode && isApi) headers.set("x-public-access-code", accessCode);
-  const response = await rawFetch(input, accessCode && isApi ? { ...init, headers } : init);
-  const contentType = response.headers.get("content-type") || "";
-  if (isApi && !contentType.includes("application/json")) {
-    throw new Error("公网服务暂时未连通：请确认本机的 npm run public:demo 终端仍在运行，然后刷新页面重试");
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  try {
+    const accessCode = localStorage.getItem("offerpilot-public-access-code");
+    const isApi = String(input).startsWith("/api/");
+    const headers = new Headers(init.headers || {});
+    if (accessCode && isApi) headers.set("x-public-access-code", accessCode);
+    // Force connection reuse: add Pragma: no-cache for Cloudflare tunnel compatibility.
+    headers.set("Pragma", "no-cache");
+    const response = await rawFetch(input, accessCode && isApi ? { ...init, headers, signal: controller.signal } : { ...init, signal: controller.signal });
+    const contentType = response.headers.get("content-type") || "";
+    if (isApi && !contentType.includes("application/json")) {
+      throw new Error("公网服务暂时未连通：请确认本机的 npm run public:demo 终端仍在运行，然后刷新页面重试");
+    }
+    return response;
+  } finally {
+    clearTimeout(timer);
   }
-  return response;
 };
+
+// ---- Auth state ----
+let isAuthenticated = false;
+let currentUser = null;
+
+async function checkAuth() {
+  try {
+    const resp = await fetch("/api/auth/me");
+    if (resp.ok) {
+      const user = await resp.json();
+      isAuthenticated = true;
+      currentUser = user;
+      return true;
+    }
+  } catch { /* offline or server unavailable */ }
+  isAuthenticated = false;
+  currentUser = null;
+  return false;
+}
+
+async function logout() {
+  try { await fetch("/api/auth/logout", { method: "POST" }); } catch { /* ignore */ }
+  window.location.href = "/";
+}
+
 let persisted = {};
 try { persisted = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch { localStorage.removeItem(KEY); }
 const state = Object.assign({ profile: null, versions: [], records: [], current: null, view: "dashboard", role: "candidate", recruiter: { jobs: [], currentJob: null, resumes: [], matches: [], selected: [] } }, persisted);
@@ -38,7 +76,7 @@ const interviewActive = () => state.role === "candidate" && state.view === "inte
 function shell(content) {
   const nav = [["dashboard","工作台"],["diagnosis","简历诊断"],["interview","模拟面试"],["growth","成长报告"]];
   const mode = interviewActive() ? " interview-mode" : "";
-  return `<div class="app-shell${mode}"><aside class="app-sidebar"><a class="brand" href="#dashboard"><span class="brand-mark">O</span><span>OfferPilot</span></a><p class="sidebar-caption">AI CAREER COACH</p><nav>${nav.map(([id,label]) => `<button class="nav-link ${state.view === id ? "active" : ""}" data-view="${id}"><span class="nav-icon">${({dashboard:"⌂",diagnosis:"▤",interview:"◉",growth:"↗"})[id]}</span>${label}</button>`).join("")}</nav><div class="privacy-card"><span class="status-dot"></span><div><b>隐私保护模式</b><small>原文件本地保存，脱敏文本用于模型分析</small></div></div></aside><main class="main-area"><header class="topbar"><div><span class="eyebrow">${({dashboard:"WORKSPACE",diagnosis:"RESUME DIAGNOSIS",interview:"MOCK INTERVIEW",growth:"GROWTH REPORT"})[state.view]}</span><h1>${({dashboard:"你的面试训练工作台",diagnosis:"把简历变成面试优势",interview:"一次真正连续的技术压力面",growth:"看见每一次训练带来的变化"})[state.view]}</h1></div><div class="top-actions"><span class="model-pill"><i></i> 百炼 · OmniMemory</span><span class="avatar">${esc(state.profile?.name?.slice(0,2) || "候选人")}</span></div></header><div class="content">${content}</div></main></div>`;
+  return `<div class="app-shell${mode}"><aside class="app-sidebar"><a class="brand" href="#dashboard"><span class="brand-mark">O</span><span>OfferPilot</span></a><p class="sidebar-caption">AI CAREER COACH</p><nav>${nav.map(([id,label]) => `<button class="nav-link ${state.view === id ? "active" : ""}" data-view="${id}"><span class="nav-icon">${({dashboard:"⌂",diagnosis:"▤",interview:"◉",growth:"↗"})[id]}</span>${label}</button>`).join("")}</nav><div class="privacy-card"><span class="status-dot"></span><div><b>隐私保护模式</b><small>原文件本地保存，脱敏文本用于模型分析</small></div></div></aside><main class="main-area"><header class="topbar"><div><span class="eyebrow">${({dashboard:"WORKSPACE",diagnosis:"RESUME DIAGNOSIS",interview:"MOCK INTERVIEW",growth:"GROWTH REPORT"})[state.view]}</span><h1>${({dashboard:"你的面试训练工作台",diagnosis:"把简历变成面试优势",interview:"一次真正连续的技术压力面",growth:"看见每一次训练带来的变化"})[state.view]}</h1></div><div class="top-actions"><span class="model-pill"><i></i> 百炼 · OmniMemory</span>${currentUser ? `<span class="avatar" title="${esc(currentUser.displayName)}">${esc(currentUser.displayName.slice(0,2))}</span><button onclick="logout()" style="margin-left:8px;padding:4px 12px;border-radius:6px;border:1px solid #ccc;background:white;cursor:pointer;font-size:13px">退出</button>` : ""}${state.profile ? `<span class="avatar">${esc(state.profile.name?.slice(0,2) || "候选人")}</span>` : ""}</div></header><div class="content">${content}</div></main></div>`;
 }
 
 async function clearCurrentInterview({ abandon = false, message } = {}) {
@@ -93,13 +131,101 @@ function handleExpiredInterview(error) {
   return false;
 }
 
+function renderAuthGate() {
+  const html = `<div style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f8f9fb">
+    <div style="background:white;border-radius:16px;padding:40px;width:380px;max-width:90vw;box-shadow:0 4px 24px rgba(0,0,0,.08)">
+      <h2 style="text-align:center;margin:0 0 24px;font-size:24px;color:#1a1a2e">OfferPilot 登录</h2>
+      <div style="display:flex;border-bottom:2px solid #eee;margin-bottom:24px">
+        <button class="auth-tab active" data-auth-tab="login" style="flex:1;padding:10px;text-align:center;border:none;background:none;font-size:15px;cursor:pointer;border-bottom:2px solid #4f46e5;color:#4f46e5;font-weight:600;margin-bottom:-2px">登录</button>
+        <button class="auth-tab" data-auth-tab="register" style="flex:1;padding:10px;text-align:center;border:none;background:none;font-size:15px;cursor:pointer;color:#888;margin-bottom:-2px">注册</button>
+      </div>
+      <form id="loginForm" style="display:block">
+        <label style="display:block;margin-bottom:6px;font-size:14px;font-weight:500">用户名<span style="color:red">*</span></label>
+        <input type="text" id="loginUsername" required placeholder="输入用户名" style="width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:14px;box-sizing:border-box;margin-bottom:16px">
+        <label style="display:block;margin-bottom:6px;font-size:14px;font-weight:500">密码<span style="color:red">*</span></label>
+        <input type="password" id="loginPassword" required placeholder="输入密码" style="width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:14px;box-sizing:border-box;margin-bottom:16px">
+        <button type="submit" style="width:100%;padding:12px;background:#4f46e5;color:white;border:none;border-radius:8px;font-size:15px;cursor:pointer;font-weight:600">登录</button>
+        <p id="loginError" style="color:red;font-size:13px;margin:12px 0 0;display:none"></p>
+      </form>
+      <form id="registerForm" style="display:none">
+        <label style="display:block;margin-bottom:6px;font-size:14px;font-weight:500">用户名<span style="color:red">*</span><small style="color:#888">（仅字母、数字、下划线，3-30位）</small></label>
+        <input type="text" id="regUsername" required minlength="3" maxlength="30" pattern="[a-zA-Z0-9_]+" placeholder="例如：zhangsan" style="width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:14px;box-sizing:border-box;margin-bottom:16px">
+        <label style="display:block;margin-bottom:6px;font-size:14px;font-weight:500">显示名称<span style="color:red">*</span></label>
+        <input type="text" id="regDisplayName" required maxlength="64" placeholder="你在应用中看到自己的名字" style="width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:14px;box-sizing:border-box;margin-bottom:16px">
+        <label style="display:block;margin-bottom:6px;font-size:14px;font-weight:500">密码<span style="color:red">*</span><small style="color:#888">（至少8位）</small></label>
+        <input type="password" id="regPassword" required minlength="8" maxlength="128" placeholder="请输入密码" style="width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:14px;box-sizing:border-box;margin-bottom:16px">
+        <button type="submit" style="width:100%;padding:12px;background:#4f46e5;color:white;border:none;border-radius:8px;font-size:15px;cursor:pointer;font-weight:600">注册</button>
+        <p id="regError" style="color:red;font-size:13px;margin:12px 0 0;display:none"></p>
+      </form>
+    </div></div>`;
+  $("#app").innerHTML = html;
+  // Tab switching
+  document.querySelectorAll(".auth-tab").forEach((btn) => {
+    btn.onclick = () => {
+      document.querySelectorAll(".auth-tab").forEach((t) => { t.style.color = "#888"; t.style.borderBottomColor = "transparent"; });
+      btn.style.color = "#4f46e5";
+      btn.style.borderBottomColor = "#4f46e5";
+      const tab = btn.dataset.authTab;
+      document.getElementById("loginForm").style.display = tab === "login" ? "block" : "none";
+      document.getElementById("registerForm").style.display = tab === "register" ? "block" : "none";
+    };
+  });
+  // Login submit
+  document.getElementById("loginForm").onsubmit = async (e) => {
+    e.preventDefault();
+    const errEl = document.getElementById("loginError");
+    errEl.style.display = "none";
+    try {
+      const resp = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ username: document.getElementById("loginUsername").value.trim(), password: document.getElementById("loginPassword").value }),
+      });
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(data.error || "登录失败");
+      toast("登录成功！");
+      setTimeout(() => window.location.reload(), 500);
+    } catch (err) {
+      errEl.textContent = err.message || "登录失败";
+      errEl.style.display = "block";
+    }
+  };
+  // Register submit
+  document.getElementById("registerForm").onsubmit = async (e) => {
+    e.preventDefault();
+    const errEl = document.getElementById("regError");
+    errEl.style.display = "none";
+    try {
+      const resp = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ username: document.getElementById("regUsername").value.trim(), displayName: document.getElementById("regDisplayName").value.trim(), password: document.getElementById("regPassword").value }),
+      });
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(data.error || "注册失败");
+      toast("注册成功！已自动登录");
+      setTimeout(() => window.location.reload(), 500);
+    } catch (err) {
+      errEl.textContent = err.message || "注册失败";
+      errEl.style.display = "block";
+    }
+  };
+}
+
 function render() {
+  if (!isAuthenticated && configRequireAuth()) { renderAuthGate(); return; }
   const content = state.role === "recruiter" ? recruiterView() : state.view === "diagnosis" ? diagnosisView() : state.view === "interview" ? interviewView() : state.view === "growth" ? growthView() : dashboardView();
   $("#app").innerHTML = shell(content);
   document.querySelectorAll("[data-view]").forEach((button) => button.onclick = () => go(button.dataset.view));
   bindView();
   bindRoleSwitch();
   if (state.role === "recruiter") bindRecruiterView();
+}
+
+/** Check if auth is enforced — reads from global scope since app.js runs in browser */
+function configRequireAuth() {
+  const marker = document.querySelector('meta[name="offerpilot-require-auth"]');
+  return marker?.content === "true";
 }
 
 function dashboardView() {
@@ -256,10 +382,24 @@ function bindUpload() {
   ["dragenter", "dragover"].forEach((e) => drop.addEventListener(e, (event) => { event.preventDefault(); drop.classList.add("dragging"); }));
   ["dragleave", "drop"].forEach((e) => drop.addEventListener(e, (event) => { event.preventDefault(); drop.classList.remove("dragging"); }));
   drop.addEventListener("drop", (event) => { if (!event.dataTransfer.files.length) return; const transfer = new DataTransfer(); transfer.items.add(event.dataTransfer.files[0]); input.files = transfer.files; input.onchange(); });
-  form.onsubmit = async (event) => { event.preventDefault(); const button = form.querySelector("button"); button.disabled = true; button.innerHTML = `<span class="loading-spinner"></span> 正在上传简历…`; try { const response = await fetch("/api/resume/analyze", { method: "POST", body: new FormData(form) }); const data = await response.json(); if (data.error) throw new Error(data.error); state.profile = data.profile; state.profile.analyzedAt = new Date().toISOString(); toast("文件已上传，正在后台解析…");
-      const poll = async () => { const result = await (await fetch(`/api/v1/tasks/${data.taskId}`)).json(); if (result.error) throw new Error(result.error); const task = result.task; button.innerHTML = `<span class="loading-spinner"></span> ${task.status === "analyzing" ? "AI 正在解析简历…" : "等待解析…"}`; if (task.status === "completed") { const analyzed = await (await fetch(`/api/v1/resumes/${data.resumeId}/analysis`)).json(); if (analyzed.error) throw new Error(analyzed.error); state.profile = analyzed.profile; state.profile.analyzedAt = new Date().toISOString(); state.versions.unshift({ id: crypto.randomUUID(), name: input.files[0]?.name || "当前简历", createdAt: state.profile.analyzedAt }); state.versions = state.versions.slice(0, 10); save(); toast("简历解析完成"); render(); return; } if (task.status === "failed") throw new Error(task.error || "简历分析失败"); await new Promise((resolve) => setTimeout(resolve, 1200)); return poll(); };
-      await poll();
-    } catch (error) { toast(error.message || "简历分析失败，请重试"); button.disabled = false; button.innerHTML = "开始智能分析 <span>→</span>"; } };
+  form.onsubmit = async (event) => { event.preventDefault(); const button = form.querySelector("button"); button.disabled = true; button.innerHTML = `<span class="loading-spinner"></span> 正在解析简历…`; try {
+      const response = await fetch("/api/resume/analyze", { method: "POST", body: new FormData(form) });
+      const data = await response.json();
+      if (!data || data.analysisError) throw new Error(data?.analysisError || "分析失败");
+      state.profile = data.profile; state.profile.analyzedAt = new Date().toISOString();
+      const uid = () => Math.random().toString(36).slice(2) + Date.now().toString(36);
+      state.versions.unshift({ id: uid(), name: input.files[0]?.name || "当前简历", createdAt: state.profile.analyzedAt });
+      state.versions = state.versions.slice(0, 10); save();
+      toast("简历解析完成！");
+      render(); go("diagnosis");
+      button.disabled = false;
+      button.innerHTML = "开始智能分析 <span>→</span>";
+    } catch (error) {
+      const msg = error.name === "AbortError" ? "上传超时：网络连接不稳定，请检查网络后重新上传。" : error.message || "简历分析失败，请重试";
+      toast(msg);
+      button.disabled = false;
+      button.innerHTML = "开始智能分析 <span>→</span>";
+    } };
 }
 
 function bindInterviewSetup() {
@@ -469,6 +609,7 @@ window.addEventListener("hashchange", () => { const view = location.hash.slice(1
 if (location.hash.slice(1)) state.view = ["dashboard", "diagnosis", "interview", "growth"].includes(location.hash.slice(1)) ? location.hash.slice(1) : "dashboard";
 
 (async () => {
+  await checkAuth(); // verify session cookie on every page load
   if (migratedInterviewId) {
     try { await fetch(`/api/interview/${migratedInterviewId}/abandon`, { method: "POST" }); } catch { /* old session remains historical only */ }
   }
