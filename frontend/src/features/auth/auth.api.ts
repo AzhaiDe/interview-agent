@@ -17,15 +17,20 @@ export interface AuthResponse {
   displayName: string;
 }
 
+// Authentication routes intentionally live outside the versioned API namespace.
+// Override apiClient's default `/api/v1` base URL so these requests do not become
+// `/api/v1/api/auth/*`, which the server correctly treats as an unauthenticated
+// protected request.
+const authRequestConfig = { baseURL: '/' } as const;
+
 export const authApi = {
   login: (data: LoginRequest) =>
-    // Auth routes are mounted outside the versioned API namespace.
-    apiClient.post<AuthResponse>('/api/auth/login', data),
+    apiClient.post<AuthResponse>('/api/auth/login', data, authRequestConfig),
 
   register: (data: RegisterRequest) =>
-    apiClient.post<AuthResponse>('/api/auth/register', data),
+    apiClient.post<AuthResponse>('/api/auth/register', data, authRequestConfig),
 
-  logout: () => apiClient.post('/api/auth/logout'),
+  logout: () => apiClient.post('/api/auth/logout', undefined, authRequestConfig),
 
-  me: () => apiClient.get<AuthResponse>('/api/auth/me'),
+  me: () => apiClient.get<AuthResponse>('/api/auth/me', authRequestConfig),
 };
