@@ -100,7 +100,30 @@ const AppRoutes = () => {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ConfigProvider locale={zhCN}>
+      <ConfigProvider
+        locale={zhCN}
+        theme={{
+          token: {
+            colorPrimary: '#5b5ce2',
+            colorInfo: '#5b5ce2',
+            colorSuccess: '#35b98f',
+            colorText: '#1e2340',
+            colorTextSecondary: '#7b819c',
+            colorBgLayout: '#f7f8fc',
+            colorBgContainer: '#ffffff',
+            colorBorderSecondary: '#e9ebf5',
+            borderRadius: 16,
+            borderRadiusLG: 24,
+            controlHeight: 42,
+            fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif",
+          },
+          components: {
+            Button: { primaryShadow: '0 10px 24px rgba(91, 92, 226, 0.22)' },
+            Card: { boxShadowTertiary: '0 12px 36px rgba(38, 44, 92, 0.06)' },
+            Menu: { itemBorderRadius: 12 },
+          },
+        }}
+      >
         <BrowserRouter>
           <AppRoutes />
         </BrowserRouter>

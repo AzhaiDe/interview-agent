@@ -6,10 +6,10 @@ const { Content } = Layout;
 
 export const MainLayout = () => {
   return (
-    <Layout className="min-h-screen">
+    <Layout className="app-shell min-h-screen">
       <Header />
       <Content
-        className="bg-gray-50"
+        className="app-content"
         role="main"
         aria-label="主要内容区域"
       >

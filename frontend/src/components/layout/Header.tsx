@@ -1,5 +1,5 @@
-import { Layout, Menu, Dropdown, Avatar, Space } from 'antd';
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { Layout, Menu, Dropdown, Avatar, Space, Badge } from 'antd';
+import { UserOutlined, LogoutOutlined, RocketOutlined } from '@ant-design/icons';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth, useLogout } from '@/features/auth/auth.hooks';
 import { useTranslation } from 'react-i18next';
@@ -31,13 +31,14 @@ export const Header = () => {
 
   return (
     <AntHeader
-      className="bg-white shadow-sm px-6 flex items-center justify-between"
+      className="app-header"
       role="banner"
     >
-      <div className="flex items-center gap-8">
-        <div className="text-xl font-bold text-primary-600">
+      <div className="app-header-inner">
+        <div className="app-brand">
           <Link to="/dashboard" aria-label="返回首页">
-            OfferPilot
+            <span className="app-brand-mark"><RocketOutlined /></span>
+            <span>OfferPilot</span>
           </Link>
         </div>
 
@@ -48,16 +49,18 @@ export const Header = () => {
             key: item.key,
             label: <Link to={item.key}>{item.label}</Link>,
           }))}
-          className="flex-1 border-b-0"
+          className="app-nav"
           role="navigation"
           aria-label="主导航"
         />
       </div>
 
       <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
-        <Space className="cursor-pointer" aria-label="用户菜单">
-          <Avatar icon={<UserOutlined />} aria-label="用户头像" />
-          <span>{user.displayName || '用户'}</span>
+        <Space className="app-user" aria-label="用户菜单">
+          <Badge dot color="#35b98f" offset={[-3, 30]}>
+            <Avatar icon={<UserOutlined />} aria-label="用户头像" />
+          </Badge>
+          <span className="app-user-name">{user.displayName || '用户'}</span>
         </Space>
       </Dropdown>
     </AntHeader>
