@@ -7,6 +7,7 @@ services:
         NODE_IMAGE: mirror.ccs.tencentyun.com/library/node:22-alpine
         ALPINE_MIRROR: https://mirrors.cloud.tencent.com/alpine
         NPM_REGISTRY: https://registry.npmmirror.com/
+        NODE_DIST_URL: https://npmmirror.com/mirrors/node
     image: offerpilot:latest
     restart: unless-stopped
     env_file:

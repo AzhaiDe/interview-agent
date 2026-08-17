@@ -4,6 +4,7 @@ FROM ${NODE_IMAGE} AS builder
 
 ARG ALPINE_MIRROR=""
 ARG NPM_REGISTRY=""
+ARG NODE_DIST_URL=""
 
 WORKDIR /app
 
@@ -18,6 +19,7 @@ COPY package*.json ./
 
 # 安装依赖；云端可切换到区域 npm 镜像，避免跨境下载超时。
 RUN if [ -n "$NPM_REGISTRY" ]; then npm config set registry "$NPM_REGISTRY"; fi \
+    && if [ -n "$NODE_DIST_URL" ]; then export npm_config_disturl="$NODE_DIST_URL"; fi \
     && npm ci
 
 # 复制源代码
