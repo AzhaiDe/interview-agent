@@ -1,5 +1,6 @@
-# 构建阶段
-FROM node:22-alpine AS builder
+# 构建阶段。云端可通过 --build-arg 切换到区域镜像源。
+ARG NODE_IMAGE=node:22-alpine
+FROM ${NODE_IMAGE} AS builder
 
 WORKDIR /app
 
@@ -19,7 +20,7 @@ COPY . .
 RUN npm run build
 
 # 生产阶段
-FROM node:22-alpine AS production
+FROM ${NODE_IMAGE} AS production
 
 WORKDIR /app
 

@@ -1,0 +1,23 @@
+services:
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+      args:
+        NODE_IMAGE: mirror.ccs.tencentyun.com/library/node:22-alpine
+        NGINX_IMAGE: mirror.ccs.tencentyun.com/library/nginx:alpine
+    image: offerpilot-frontend:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:80"
+    networks:
+      - deploy_default
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  deploy_default:
+    external: true
