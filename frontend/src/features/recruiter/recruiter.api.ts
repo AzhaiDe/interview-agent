@@ -51,6 +51,22 @@ export interface Task {
   updatedAt: string;
 }
 
+function normalizeJob(raw: any): RecruiterJob {
+  const job = raw?.job || raw || {};
+  const mustHave = Array.isArray(job.mustHave) ? job.mustHave.map((item: any) => item?.label || item).filter(Boolean) : [];
+  const niceToHave = Array.isArray(job.niceToHave) ? job.niceToHave.map((item: any) => item?.label || item).filter(Boolean) : [];
+  return {
+    ...job,
+    title: job.title || '未命名职位',
+    description: job.description || job.jdRaw || '',
+    requirements: Array.isArray(job.requirements) ? job.requirements : [...mustHave, ...niceToHave],
+    status: job.status || (job.rubricStatus === 'confirmed' ? 'active' : 'draft'),
+    candidateCount: Number.isFinite(job.candidateCount) ? job.candidateCount : (Array.isArray(job.candidates) ? job.candidates.length : 0),
+    createdAt: job.createdAt || job.updatedAt || '',
+    updatedAt: job.updatedAt || job.createdAt || '',
+  };
+}
+
 // 招聘 API
 export const recruiterApi = {
   // 职位管理
@@ -60,17 +76,17 @@ export const recruiterApi = {
     requirements: string[];
   }): Promise<RecruiterJob> => {
     const response = await apiClient.post('/recruiter/jobs', data);
-    return response.data;
+    return normalizeJob(response.data);
   },
 
   listJobs: async (): Promise<{ jobs: RecruiterJob[] }> => {
     const response = await apiClient.get('/recruiter/jobs');
-    return response.data;
+    return { jobs: (response.data?.jobs || []).map(normalizeJob) };
   },
 
   getJob: async (jobId: string): Promise<RecruiterJob> => {
     const response = await apiClient.get(`/recruiter/jobs/${jobId}`);
-    return response.data;
+    return normalizeJob(response.data);
   },
 
   confirmRubric: async (jobId: string, rubric: any): Promise<void> => {

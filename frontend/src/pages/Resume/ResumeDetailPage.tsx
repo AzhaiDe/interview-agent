@@ -216,7 +216,7 @@ export const ResumeDetailPage = () => {
                     {rec.role}
                   </Text>
                   <Tag color="blue">
-                    匹配度：{(rec.confidence * 100).toFixed(0)}%
+                    匹配度：{((rec.confidence ?? (rec as any).score ?? 0) * 100).toFixed(0)}%
                   </Tag>
                 </div>
                 <Text type="secondary">{rec.reason}</Text>

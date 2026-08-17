@@ -70,7 +70,7 @@ export const RecruiterJobsPage = () => {
           active: { color: 'processing', text: '招聘中', icon: <CheckCircleOutlined /> },
           closed: { color: 'default', text: '已关闭', icon: <CloseCircleOutlined /> },
         };
-        const config = statusConfig[status];
+        const config = statusConfig[status] || statusConfig.draft;
         return (
           <Tag color={config.color} icon={config.icon}>
             {config.text}

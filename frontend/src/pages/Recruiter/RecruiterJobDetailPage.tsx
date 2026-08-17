@@ -91,7 +91,7 @@ export const RecruiterJobDetailPage = () => {
           completed: { color: 'success', text: '已完成' },
           failed: { color: 'error', text: '失败' },
         };
-        const config = statusConfig[status];
+        const config = statusConfig[status] || statusConfig.pending;
         return <Tag color={config.color}>{config.text}</Tag>;
       },
     },
@@ -260,7 +260,7 @@ export const RecruiterJobDetailPage = () => {
                  task.status === 'failed' ? '失败' : '等待中'}
               </Tag>
             </div>
-            <Progress percent={Math.round((task.progress / task.total) * 100)} />
+            <Progress percent={Math.round(((task.progress || 0) / Math.max(1, task.total || 0)) * 100)} />
             <Text type="secondary" className="text-sm mt-2 block">
               {task.progress} / {task.total}
             </Text>

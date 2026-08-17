@@ -80,7 +80,7 @@ export const InterviewListPage = () => {
           completed: { color: 'success', text: '已完成', icon: <CheckCircleOutlined /> },
           abandoned: { color: 'default', text: '已放弃', icon: <CloseCircleOutlined /> },
         };
-        const config = statusConfig[status];
+        const config = statusConfig[status] || statusConfig.active;
         return (
           <Tag color={config.color} icon={config.icon}>
             {config.text}
