@@ -2,10 +2,15 @@
 ARG NODE_IMAGE=node:22-alpine
 FROM ${NODE_IMAGE} AS builder
 
+ARG ALPINE_MIRROR=""
+
 WORKDIR /app
 
 # 安装构建依赖（用于编译 better-sqlite3 等原生模块）
-RUN apk add --no-cache python3 make g++
+RUN if [ -n "$ALPINE_MIRROR" ]; then \
+      sed -i "s#https://dl-cdn.alpinelinux.org/alpine#$ALPINE_MIRROR#g" /etc/apk/repositories; \
+    fi \
+    && apk add --no-cache python3 make g++
 
 # 复制 package.json
 COPY package*.json ./
