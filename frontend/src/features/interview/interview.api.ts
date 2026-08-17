@@ -1,6 +1,29 @@
 import { apiClient } from '@/services/api.client';
 import type { ResumeProfile } from '@/features/resume/resume.api';
 
+/**
+ * `crypto.randomUUID()` is only exposed in secure contexts by some browsers.
+ * The production site can be opened over plain HTTP, so use the broadly
+ * supported `getRandomValues` API as a fallback for idempotency keys.
+ */
+function createIdempotencyKey(): string {
+  const webCrypto = globalThis.crypto;
+  if (typeof webCrypto?.randomUUID === 'function') {
+    return webCrypto.randomUUID();
+  }
+
+  if (typeof webCrypto?.getRandomValues === 'function') {
+    const bytes = new Uint8Array(16);
+    webCrypto.getRandomValues(bytes);
+    bytes[6] = (bytes[6] & 0x0f) | 0x40;
+    bytes[8] = (bytes[8] & 0x3f) | 0x80;
+    const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+    return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+  }
+
+  return `idempotency-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
 export type InterviewType = 'comprehensive' | 'project_deep_dive' | 'technical_fundamentals' | 'system_design';
 export type InterviewResult = 'PASS' | 'BORDERLINE' | 'FAIL';
 
@@ -112,7 +135,7 @@ export const interviewApi = {
 
   submitAnswer: (id: string, answer: string): Promise<AnswerResponse> =>
     apiClient.post(`/interviews/${id}/answers`, { answer }, {
-      headers: { 'Idempotency-Key': crypto.randomUUID() },
+      headers: { 'Idempotency-Key': createIdempotencyKey() },
     }),
 
   finish: (id: string): Promise<{ report: GrowthReport; transcript: TranscriptTurn[]; diagnoses: Diagnosis[] }> =>
