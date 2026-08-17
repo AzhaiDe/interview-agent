@@ -22,8 +22,11 @@ import { ExecutableGraph } from "./graph-runtime.js";
 import type { InterviewSession, JobProfile, RecruiterResume } from "./types.js";
 import { verifyAccessToken, AUTH_COOKIE_NAME, hashPassword, comparePassword, generateAccessToken, getCookieOptions } from "./auth.js";
 
-const app = Fastify({ logger: true, trustProxy: config.publicDemo, bodyLimit: 2 * 1024 * 1024 });
-await app.register(multipart, { limits: { fileSize: 8 * 1024 * 1024, files: 50, parts: 60 } });
+// Keep the transport limit slightly above the advertised 10 MB file limit so
+// multipart overhead does not turn a valid upload into a 413 response.
+const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
+const app = Fastify({ logger: true, trustProxy: config.publicDemo, bodyLimit: 12 * 1024 * 1024 });
+await app.register(multipart, { limits: { fileSize: MAX_UPLOAD_BYTES, files: 50, parts: 60 } });
 const corsOrigins = process.env.CORS_ORIGIN
   ? process.env.CORS_ORIGIN.split(',').map(s => s.trim())
   : ['http://localhost', 'http://localhost:80', 'http://localhost:3000'];
