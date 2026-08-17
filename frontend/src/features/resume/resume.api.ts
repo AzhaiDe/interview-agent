@@ -6,6 +6,8 @@ export interface Resume {
   ownerId: string;
   fileName: string;
   uploadedAt: string;
+  /** The API may return the persisted `createdAt` name for legacy records. */
+  createdAt?: string;
   analysisStatus: 'pending' | 'analyzing' | 'completed' | 'failed';
   profile?: ResumeProfile;
   rawText?: string;
@@ -69,7 +71,16 @@ export const resumeApi = {
 
   list: async (): Promise<{ resumes: Resume[] }> => {
     const response = await apiClient.get('/resumes');
-    return response.data;
+    const payload = response.data as { resumes?: Array<Resume & { createdAt?: string; analysisStatus?: Resume['analysisStatus'] }> };
+    return {
+      resumes: (payload.resumes || []).map((resume) => ({
+        ...resume,
+        uploadedAt: resume.uploadedAt || resume.createdAt || '',
+        // Candidate resume analysis is performed when the record is created;
+        // older records do not persist a separate status field.
+        analysisStatus: resume.analysisStatus || 'completed',
+      })),
+    };
   },
 
   get: async (id: string): Promise<Resume> => {

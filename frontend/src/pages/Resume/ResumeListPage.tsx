@@ -97,7 +97,7 @@ export const ResumeListPage = () => {
           completed: { color: 'success', text: '已完成' },
           failed: { color: 'error', text: '失败' },
         };
-        const config = statusConfig[status];
+        const config = statusConfig[status] || statusConfig.pending;
         return <Tag color={config.color}>{config.text}</Tag>;
       },
     },
