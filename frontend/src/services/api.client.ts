@@ -35,7 +35,10 @@ apiClient.interceptors.request.use(
 
 // Response interceptor: unified error handling
 apiClient.interceptors.response.use(
-  (response) => response.data,
+  // Keep the standard Axios response shape. Feature APIs intentionally read
+  // `response.data`; stripping it here would make those methods return
+  // `undefined` after they unwrap the payload a second time.
+  (response) => response,
   (error) => {
     // A failed login/register request must not clear the existing client state.
     if (error.response?.status === 401 && !error.config?.url?.includes('/auth/')) {

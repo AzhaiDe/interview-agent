@@ -25,12 +25,12 @@ const authRequestConfig = { baseURL: '/' } as const;
 
 export const authApi = {
   login: (data: LoginRequest) =>
-    apiClient.post<AuthResponse>('/api/auth/login', data, authRequestConfig),
+    apiClient.post<AuthResponse>('/api/auth/login', data, authRequestConfig).then((response) => response.data),
 
   register: (data: RegisterRequest) =>
-    apiClient.post<AuthResponse>('/api/auth/register', data, authRequestConfig),
+    apiClient.post<AuthResponse>('/api/auth/register', data, authRequestConfig).then((response) => response.data),
 
-  logout: () => apiClient.post('/api/auth/logout', undefined, authRequestConfig),
+  logout: () => apiClient.post('/api/auth/logout', undefined, authRequestConfig).then((response) => response.data),
 
-  me: () => apiClient.get<AuthResponse>('/api/auth/me', authRequestConfig),
+  me: () => apiClient.get<AuthResponse>('/api/auth/me', authRequestConfig).then((response) => response.data),
 };
