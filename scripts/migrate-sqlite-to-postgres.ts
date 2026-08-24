@@ -1,9 +1,9 @@
 import BetterSqlite3 from "better-sqlite3";
 import { Pool } from "pg";
-import { config } from "../src/config.js";
+import path from "node:path";
 
-const sqlitePath = process.env.SQLITE_DATABASE_PATH || config.databasePath;
-const postgresUrl = process.env.DATABASE_URL || config.postgresUrl;
+const sqlitePath = process.env.SQLITE_DATABASE_PATH || path.resolve(process.cwd(), "data-v2/offerpilot.sqlite");
+const postgresUrl = process.env.DATABASE_URL || "";
 if (!postgresUrl) throw new Error("DATABASE_URL/POSTGRES_URL is required");
 
 const tables = [

@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:16-alpine
+    image: mirror.ccs.tencentyun.com/library/postgres:16-alpine
     restart: unless-stopped
     env_file:
       - .env.production
