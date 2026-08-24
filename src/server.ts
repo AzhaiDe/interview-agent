@@ -19,6 +19,7 @@ import { getKnowledgeRows, knowledgeHealth, retrieveEvidencePack } from "./knowl
 import { graphManifest } from "./agent-graph.js";
 import { rolloutAllowed } from "./graph-shadow.js";
 import { createPostgresPool, postgresHealth } from "./postgres.js";
+import { rolloutDecision } from "./rollout.js";
 import { interviewGraph } from "./agent/interview-graph.js";
 import { ExecutableGraph } from "./graph-runtime.js";
 import type { InterviewSession, JobProfile, RecruiterResume } from "./types.js";
@@ -175,7 +176,7 @@ for (const [route, file] of Object.entries(staticFiles)) app.get(route, async (_
 app.get("/api/v1/health", async () => ({ ok: true, version: "3.0.0-graph-local", capabilities: { ...runtimeCapabilities(), graph: graphManifest().version, knowledge: knowledgeHealth() } }));
 app.get("/api/v1/graph/manifest", async () => graphManifest());
 app.get("/api/v1/graph/v2/manifest", async () => ({ version: "langgraph-v2", engine: "langgraph", nodes: ["load_context", "select_strategy", "compose_question", "question_guard", "wait_for_answer", "evaluate_answer", "converge"], configured: config.graphEngine, active: false, checkpointer: config.postgresUrl ? "postgres" : "memory" }));
-app.get("/api/v1/graph/rollout-policy", async () => ({ engine: config.graphEngine, policy: rolloutAllowed([], 100), rollback: "INTERVIEW_GRAPH_ENGINE=legacy DATABASE_DRIVER=sqlite" }));
+app.get("/api/v1/graph/rollout-policy", async () => ({ engine: config.graphEngine, sample: rolloutDecision("health-check"), policy: rolloutAllowed([], 100), rollback: "INTERVIEW_GRAPH_ENGINE=legacy DATABASE_DRIVER=sqlite" }));
 app.get("/api/v1/health/postgres", async (_request, reply) => {
   if (!config.postgresUrl) return { configured: false, ok: false, reason: "DATABASE_URL/POSTGRES_URL 未配置" };
   const pool = createPostgresPool();
