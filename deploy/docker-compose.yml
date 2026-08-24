@@ -1,4 +1,17 @@
 services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    volumes:
+      - offerpilot-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
   offerpilot:
     build:
       context: ..
@@ -17,11 +30,16 @@ services:
       PORT: 4310
       DATA_DIR: /app/data-v2
       DATABASE_PATH: /app/data-v2/offerpilot.sqlite
+      DATABASE_DRIVER: ${DATABASE_DRIVER:-sqlite}
       UPLOAD_DIR: /app/data-v2/uploads
     ports:
       - "127.0.0.1:4310:4310"
     volumes:
       - offerpilot-data:/app/data-v2
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 volumes:
   offerpilot-data:
+  offerpilot-postgres:

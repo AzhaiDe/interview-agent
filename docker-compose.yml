@@ -1,4 +1,23 @@
 services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: offerpilot
+      POSTGRES_USER: offerpilot
+      POSTGRES_PASSWORD: offerpilot-dev-password
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - offerpilot-postgres:/var/lib/postgresql/data
+    networks:
+      - offerpilot-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U offerpilot -d offerpilot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   # 前端应用
   frontend:
     build:
@@ -33,6 +52,7 @@ services:
       - PORT=4310
       - DATABASE_PATH=/app/data/db.sqlite
       - UPLOAD_DIR=/app/data/uploads
+      - DATABASE_URL=postgresql://offerpilot:offerpilot-dev-password@postgres:5432/offerpilot
     volumes:
       - backend-data:/app/data
     networks:
@@ -44,6 +64,9 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   # Nginx 反向代理（可选，用于生产环境）
   nginx:
@@ -68,4 +91,6 @@ networks:
 
 volumes:
   backend-data:
+    driver: local
+  offerpilot-postgres:
     driver: local

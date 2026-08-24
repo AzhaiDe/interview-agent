@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { parseDatabaseDriver, parseGraphEngine } from "./runtime-flags.js";
 
 // Lightweight .env loader that respects pre-set env vars (important for
 // eval/test runners that disable services via process.env before import).
@@ -33,6 +34,11 @@ export const config = {
   port: intEnv("PORT", 4310),
   host: process.env.HOST || "0.0.0.0",
   publicDemo: process.env.PUBLIC_DEMO === "true",
+  // Phase 0 keeps the legacy path as the safe default. Later phases can turn
+  // on LangGraph or shadow execution without changing the public API.
+  graphEngine: parseGraphEngine(process.env.INTERVIEW_GRAPH_ENGINE),
+  databaseDriver: parseDatabaseDriver(process.env.DATABASE_DRIVER),
+  postgresUrl: process.env.DATABASE_URL || process.env.POSTGRES_URL || "",
   dataDir: path.resolve(process.env.DATA_DIR || path.join(process.cwd(), "data-v2")),
   databasePath: path.resolve(process.env.DATABASE_PATH || path.join(process.cwd(), "data-v2", "offerpilot.sqlite")),
   uploadDir: path.resolve(process.env.UPLOAD_DIR || path.join(process.cwd(), "data-v2", "uploads")),
@@ -65,7 +71,8 @@ export function runtimeCapabilities() {
   return {
     model: config.model.enabled && Boolean(config.model.apiKey),
     omnimemory: config.memory.enabled && Boolean(config.memory.apiKey),
-    database: "sqlite",
+    database: config.databaseDriver,
+    graphEngine: config.graphEngine,
     storage: "local",
   };
 }

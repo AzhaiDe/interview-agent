@@ -17,6 +17,8 @@ import { analyzeResume, extractText } from "./resume.js";
 import { analyzeResumeWorkflow } from "./resume-workflow.js";
 import { getKnowledgeRows, knowledgeHealth, retrieveEvidencePack } from "./knowledge-service.js";
 import { graphManifest } from "./agent-graph.js";
+import { rolloutAllowed } from "./graph-shadow.js";
+import { createPostgresPool, postgresHealth } from "./postgres.js";
 import { interviewGraph } from "./agent/interview-graph.js";
 import { ExecutableGraph } from "./graph-runtime.js";
 import type { InterviewSession, JobProfile, RecruiterResume } from "./types.js";
@@ -76,7 +78,7 @@ app.addHook("onRequest", async (request, reply) => {
   }
   // Health probes are internal liveness checks, not user API calls. They must
   // remain unauthenticated so Docker/systemd can determine container health.
-  const isHealthCheck = request.url.split("?", 1)[0] === "/api/v1/health";
+  const isHealthCheck = request.url.split("?", 1)[0].startsWith("/api/v1/health");
   if (config.requireAuth && !isPublicPath && !isAuthEndpoint && !isHealthCheck) {
     const header = String(request.headers.authorization || "");
     const bearer = header.toLowerCase().startsWith("bearer ") ? header.slice(7).trim() : "";
@@ -100,10 +102,10 @@ app.addHook("onRequest", async (request, reply) => {
   if (bucket.count > limit) return reply.code(429).send({ error: "请求过于频繁，请一分钟后重试" });
 });
 
- function serializeInterview(session: InterviewSession) {
+function serializeInterview(session: InterviewSession) {
   const runtime = (session as any).agentRuntime;
   const graphState = (session as any)._graphState;
-  return { sessionId: session.id, status: session.result ? "finished" : "active", targetRole: session.profile.targetRole, pressure: session.pressure, interviewType: session.interviewType || "comprehensive", phase: session.phase, question: session.currentQuestion, topic: session.currentTopic, questionType: session.currentQuestionType, mappedSkill: session.currentMappedSkill, progress: session.questionIndex, mode: session.modelMode, result: session.result, transcript: session.transcript, diagnoses: session.diagnoses, roleRubric: session.roleRubric, skillRoundCounts: session.skillRoundCounts, graph: { version: runtime?.graphVersion, node: runtime?.node, traceId: runtime?.traceId, evidenceCount: runtime?.evidenceLedger?.length || 0, beliefCount: Object.keys(runtime?.beliefs || {}).length, personalMemoryCount: runtime?.lastEvidencePack?.personalMemory?.length || 0, memoryEventIds: runtime?.lastEvidencePack?.provenance?.memoryEventIds || [], subgraph: graphState?.subgraphName, subgraphStep: graphState?.subgraphStep, nextAction: graphState?.nextAction, latencyMs: graphState?.trace?.latencyMs || 0, tokensUsed: graphState?.trace?.tokensUsed || 0, modelCalls: graphState?.trace?.modelCalls || 0, nodeMetrics: graphState?.trace?.nodeMetrics || {}, contradictions: graphState?.contradictions?.length || 0 } };
+  return { sessionId: session.id, status: session.result ? "finished" : "active", targetRole: session.profile.targetRole, pressure: session.pressure, interviewType: session.interviewType || "comprehensive", phase: session.phase, question: session.currentQuestion, topic: session.currentTopic, questionType: session.currentQuestionType, mappedSkill: session.currentMappedSkill, progress: session.questionIndex, mode: session.modelMode, result: session.result, transcript: session.transcript, diagnoses: session.diagnoses, roleRubric: session.roleRubric, skillRoundCounts: session.skillRoundCounts, graph: { engine: config.graphEngine, version: runtime?.graphVersion, node: runtime?.node, traceId: runtime?.traceId, evidenceCount: runtime?.evidenceLedger?.length || 0, beliefCount: Object.keys(runtime?.beliefs || {}).length, personalMemoryCount: runtime?.lastEvidencePack?.personalMemory?.length || 0, memoryEventIds: runtime?.lastEvidencePack?.provenance?.memoryEventIds || [], subgraph: graphState?.subgraphName, subgraphStep: graphState?.subgraphStep, nextAction: graphState?.nextAction, latencyMs: graphState?.trace?.latencyMs || 0, tokensUsed: graphState?.trace?.tokensUsed || 0, modelCalls: graphState?.trace?.modelCalls || 0, nodeMetrics: graphState?.trace?.nodeMetrics || {}, contradictions: graphState?.contradictions?.length || 0 } };
 }
 
 async function runRecruiterTask(taskId: string, job: JobProfile, userId: string) {
@@ -172,6 +174,15 @@ for (const [route, file] of Object.entries(staticFiles)) app.get(route, async (_
 
 app.get("/api/v1/health", async () => ({ ok: true, version: "3.0.0-graph-local", capabilities: { ...runtimeCapabilities(), graph: graphManifest().version, knowledge: knowledgeHealth() } }));
 app.get("/api/v1/graph/manifest", async () => graphManifest());
+app.get("/api/v1/graph/v2/manifest", async () => ({ version: "langgraph-v2", engine: "langgraph", nodes: ["load_context", "select_strategy", "compose_question", "question_guard", "wait_for_answer", "evaluate_answer", "converge"], configured: config.graphEngine, active: false, checkpointer: config.postgresUrl ? "postgres" : "memory" }));
+app.get("/api/v1/graph/rollout-policy", async () => ({ engine: config.graphEngine, policy: rolloutAllowed([], 100), rollback: "INTERVIEW_GRAPH_ENGINE=legacy DATABASE_DRIVER=sqlite" }));
+app.get("/api/v1/health/postgres", async (_request, reply) => {
+  if (!config.postgresUrl) return { configured: false, ok: false, reason: "DATABASE_URL/POSTGRES_URL 未配置" };
+  const pool = createPostgresPool();
+  try { return { configured: true, ...(await postgresHealth(pool)) }; }
+  catch (error) { return reply.code(503).send({ configured: true, ok: false, error: error instanceof Error ? error.message : String(error) }); }
+  finally { await pool.end(); }
+});
 app.get("/api/v1/knowledge/health", async () => knowledgeHealth());
 app.get<{ Querystring: { roleId?: string; type?: string; status?: any; limit?: string } }>("/api/v1/knowledge/entities", async (request, reply) => {
   const type = request.query.type || "questions";
