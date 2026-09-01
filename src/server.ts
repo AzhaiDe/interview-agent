@@ -24,6 +24,7 @@ import { interviewGraph } from "./agent/interview-graph.js";
 import { ExecutableGraph } from "./graph-runtime.js";
 import type { InterviewSession, JobProfile, RecruiterResume } from "./types.js";
 import { verifyAccessToken, AUTH_COOKIE_NAME, hashPassword, comparePassword, generateAccessToken, getCookieOptions } from "./auth.js";
+import { getLangGraphInterviewEngine } from "./agent/langgraph-engine.js";
 
 // Keep the transport limit slightly above the advertised 10 MB file limit so
 // multipart overhead does not turn a valid upload into a 413 response.
@@ -175,7 +176,7 @@ for (const [route, file] of Object.entries(staticFiles)) app.get(route, async (_
 
 app.get("/api/v1/health", async () => ({ ok: true, version: "3.0.0-graph-local", capabilities: { ...runtimeCapabilities(), graph: graphManifest().version, knowledge: knowledgeHealth() } }));
 app.get("/api/v1/graph/manifest", async () => graphManifest());
-app.get("/api/v1/graph/v2/manifest", async () => ({ version: "langgraph-v2", engine: "langgraph", nodes: ["load_context", "select_strategy", "compose_question", "question_guard", "wait_for_answer", "evaluate_answer", "converge"], configured: config.graphEngine, active: false, checkpointer: config.postgresUrl ? "postgres" : "memory" }));
+app.get("/api/v1/graph/v2/manifest", async () => ({ version: "langgraph-v3", engine: "langgraph", nodes: ["bootstrap", "decide_next", "formulate_question", "await_answer", "evaluate_answer", "commit_turn", "finalize"], configured: config.graphEngine, active: config.graphEngine === "langgraph", checkpointer: config.databaseDriver === "postgres" && config.postgresUrl ? "postgres" : "memory" }));
 app.get("/api/v1/graph/rollout-policy", async () => ({ engine: config.graphEngine, sample: rolloutDecision("health-check"), policy: rolloutAllowed([], 100), rollback: "INTERVIEW_GRAPH_ENGINE=legacy DATABASE_DRIVER=sqlite" }));
 app.get("/api/v1/health/postgres", async (_request, reply) => {
   if (!config.postgresUrl) return { configured: false, ok: false, reason: "DATABASE_URL/POSTGRES_URL 未配置" };
@@ -497,6 +498,11 @@ app.get<{ Params: { jobId: string } }>("/api/v1/recruiter/jobs/:jobId/results", 
 async function handleInterviewStart(request: any, reply: any) {
   const parsed = z.object({ profile: z.any(), pressure: z.number().int().min(1).max(5).default(3), interviewType: z.enum(["comprehensive", "project_deep_dive", "technical_fundamentals", "system_design"]).default("comprehensive"), targetRole: z.string().trim().min(1).max(160) }).safeParse(request.body);
   if (!parsed.success) return reply.code(400).send({ error: "面试配置无效" });
+  if (config.graphEngine === "langgraph") {
+    const result = await getLangGraphInterviewEngine().start({ ownerId: request.userId, profile: { ...parsed.data.profile, targetRole: parsed.data.targetRole }, pressure: parsed.data.pressure, interviewType: parsed.data.interviewType, targetRole: parsed.data.targetRole });
+    database.audit({ ownerId: request.userId, action: "interview.started", resourceType: "interview", resourceId: result.session.id, metadata: { engine: "langgraph", targetRole: parsed.data.targetRole } });
+    return { sessionId: result.session.id, question: result.question, mode: result.session.modelMode, phase: result.session.phase, graph: result.graph, transcript: result.session.transcript, progress: result.session.questionIndex };
+  }
   const profile = { ...parsed.data.profile, targetRole: parsed.data.targetRole };
   const session = createGraphSession(profile, parsed.data.pressure, parsed.data.interviewType);
   session.state = "opening"; database.saveInterview(request.userId, session);
@@ -518,6 +524,17 @@ async function handleInterviewAnswer(request: any, reply: any) {
     const saved = database.getIdempotent(request.userId, key);
     if (saved && saved.requestHash !== requestHash) return reply.code(409).send({ error: "同一个 Idempotency-Key 不能用于不同回答" });
     if (saved) return reply.code(saved.statusCode).send(saved.response);
+  }
+  if (config.graphEngine === "langgraph") {
+    try {
+      const result = await getLangGraphInterviewEngine().answer({ ownerId: request.userId, sessionId: session.id, answer: parsed.data.answer, idempotencyKey: key || undefined });
+      const response = { ...result, sessionId: session.id, question: result.question, phase: result.session.phase, progress: result.session.questionIndex, transcript: result.session.transcript, graph: result.graph };
+      if (key) database.saveIdempotent(request.userId, key, requestHash, response);
+      return response;
+    } catch (error) {
+      request.log.error(error);
+      return reply.code(409).send({ error: "当前面试状态不允许提交回答", detail: error instanceof Error ? error.message : "unknown" });
+    }
   }
   session.state = "evaluating"; database.saveInterview(request.userId, session);
   const outcome = await evaluateInterviewAnswer(request.userId, session, parsed.data.answer);
@@ -554,6 +571,10 @@ async function handleInterviewAnswer(request: any, reply: any) {
 
 async function handleInterviewFinish(request: any, reply: any) {
   const session = database.getInterview(request.params.id, request.userId); if (!session) return reply.code(404).send({ error: "面试不存在或已过期", expired: true });
+  if (config.graphEngine === "langgraph") {
+    const result = await getLangGraphInterviewEngine().finish(request.userId, request.params.id);
+    return { report: result.report, transcript: result.session.transcript, profile: result.session.profile, diagnoses: result.session.diagnoses, graph: result.graph };
+  }
   if (session.growthReport) return { report: session.growthReport, transcript: session.transcript, profile: session.profile, diagnoses: session.diagnoses, memoryStatus: database.memoryStatus(`interview:${session.id}`, request.userId) };
   session.state = "finishing"; database.saveInterview(request.userId, session);
   const report = await createGrowthReport(session); session.growthReport = report; session.result = report.result; session.state = "completed"; session.phase = "总结"; database.saveInterview(request.userId, session); database.saveGraphCheckpoint(request.userId, session);
@@ -574,6 +595,14 @@ app.post<{ Params: { id: string } }>("/api/v1/interviews/:id/review", async (req
   if (!session) return reply.code(404).send({ error: "面试不存在" });
   const parsed = z.object({ decision: z.enum(["approve", "reject"]), note: z.string().max(500).optional() }).safeParse(request.body);
   if (!parsed.success) return reply.code(400).send({ error: "复核决策无效" });
+  if (config.graphEngine === "langgraph") {
+    try {
+      const result = await getLangGraphInterviewEngine().review({ ownerId: request.userId, sessionId: request.params.id, decision: parsed.data.decision, note: parsed.data.note });
+      return { ok: true, decision: parsed.data.decision, session: result.session, graph: result.graph, question: result.question };
+    } catch (error) {
+      return reply.code(409).send({ error: "复核状态已失效", detail: error instanceof Error ? error.message : "unknown" });
+    }
+  }
   const runtime = (session as any).agentRuntime;
   if (runtime?.node !== "human_review" && session.state !== "paused") return reply.code(409).send({ error: "当前没有待复核评价" });
   if (parsed.data.decision === "reject") {
