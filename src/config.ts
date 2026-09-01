@@ -45,6 +45,10 @@ export const config = {
   ocr: { enabled: process.env.OCR_ENABLED !== "false", languages: process.env.OCR_LANGUAGES || "chi_sim+eng", maxPages: intEnv("OCR_MAX_PAGES", 8) },
   localUserId: process.env.LOCAL_USER_ID || "local-user",
   requireAuth: process.env.REQUIRE_AUTH !== "false",
+  // Set COOKIE_SECURE=true only when users access the public endpoint over
+  // HTTPS. NODE_ENV=production alone does not imply HTTPS (for example, the
+  // Tencent Cloud deployment is currently reached through a plain HTTP IP).
+  cookieSecure: process.env.COOKIE_SECURE === "true",
   adminUserId: process.env.ADMIN_USER_ID || "admin",
   adminUserPassword: process.env.ADMIN_USER_PASSWORD || "",
   workerConcurrency: Math.max(1, Math.min(8, intEnv("WORKER_CONCURRENCY", 3))),

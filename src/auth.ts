@@ -35,14 +35,15 @@ export async function comparePassword(password: string, hash: string): Promise<b
 export const AUTH_COOKIE_NAME = "offerpilot-token";
 
 // Cookie settings -- sameSite=lax prevents CSRF while allowing top-level navigation GET requests
-// secure flag toggled based on env -- protects cookie over HTTPS in prod, allows HTTP in dev
+// Secure must follow the public transport, not NODE_ENV. A Secure cookie sent
+// from a plain HTTP IP is silently rejected by browsers.
 // maxAge matches JWT expiry so the browser discards the cookie at the same time the token expires server-side
 export function getCookieOptions() {
   return {
     httpOnly: true,
     sameSite: "lax" as const,
     path: "/",
-    secure: config.env === "production" || config.publicDemo,
+    secure: config.cookieSecure,
     maxAge: 24 * 60 * 60 * 1000, // 24 hours in ms
   };
 }

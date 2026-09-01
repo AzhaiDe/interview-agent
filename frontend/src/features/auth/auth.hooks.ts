@@ -68,10 +68,17 @@ export const useTokenValid = () => {
   if (!token) return false;
 
   try {
-    // 简单解码 JWT payload（不验证签名，只检查过期时间）
-    const payload = JSON.parse(atob(token.split('.')[1]));
+    // JWT uses base64url, while atob() only accepts standard base64. Tokens
+    // whose payload contains `-` or `_` were previously treated as expired,
+    // so SessionGuard cleared a freshly-created session right after login.
+    const payloadPart = token.split('.')[1];
+    if (!payloadPart) return false;
+    const normalized = payloadPart.replace(/-/g, '+').replace(/_/g, '/');
+    const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, '=');
+    const bytes = Uint8Array.from(atob(padded), (char) => char.charCodeAt(0));
+    const payload = JSON.parse(new TextDecoder().decode(bytes));
     const now = Date.now() / 1000;
-    return payload.exp > now;
+    return typeof payload.exp === 'number' && payload.exp > now;
   } catch {
     return false;
   }
